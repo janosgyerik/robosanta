@@ -1,0 +1,4 @@
+# Install required python packages using pip:
+# pip install -r requirements.txt
+py-stackexchange==2.2.004
+six==1.9.0
