@@ -64,7 +64,7 @@ def parse_args():
     naruto_parser.add_argument(*room_param_args, **room_param_kwargs)
     naruto_parser.set_defaults(func=naruto)
 
-    chat_parser = subparsers.add_parser('chat', help='Post a message in chat (debugging)')
+    chat_parser = subparsers.add_parser('chat', help='Post a message in a chat room')
     chat_parser.add_argument(*room_param_args, **room_param_kwargs)
     chat_parser.add_argument('message')
     chat_parser.set_defaults(func=chat)
