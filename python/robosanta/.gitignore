@@ -64,5 +64,8 @@ target/
 virtualenv/
 db.sqlite3
 
+# local config
+/settings.py
+
 # misc
 tmp/
