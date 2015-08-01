@@ -8,7 +8,7 @@ Memo
 
 Naruto answers
 
-http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score?DisplayName=+&UserId=-1&Limit=1000
+http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score
 
 How to write a chat bot:
 
