@@ -14,6 +14,7 @@ import settings
 
 
 NARUTO_URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score'
+NARUTO_INTRO_MESSAGE = 'hm, accepted answer with 0 score...'
 
 
 def main():
@@ -46,8 +47,7 @@ def naruto(args):
             continue
 
         if answer and answer.score == 0:
-            send_message(args.room_id, 'hm, accepted answer with 0 score... '
-                                       'perhaps OP didn\'t have enough rep to upvote?')
+            send_message(args.room_id, NARUTO_INTRO_MESSAGE)
             send_message(args.room_id, answer.url)
             break
 
