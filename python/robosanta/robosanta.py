@@ -42,6 +42,10 @@ def naruto(args):
             answer = cr.answer(answer_id)
         except ValueError:
             continue
+
+        if answer.owner_id in settings.EXCLUDED_OWNERS:
+            continue
+
         if answer and answer.score == 0:
             send_message(args.room_id, 'hm, accepted answer with 0 score... '
                                        'perhaps OP didn\'t have enough rep to upvote?')
