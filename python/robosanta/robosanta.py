@@ -38,7 +38,7 @@ def naruto(args):
     cr = CodeReview()
     for answer_id in answer_ids:
         try:
-            logging.info('checking score of answer {}'.format(answer_id))
+            logging.info('fetching answer {}'.format(answer_id))
             answer = cr.answer(answer_id)
         except ValueError:
             continue
