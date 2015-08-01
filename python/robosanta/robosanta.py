@@ -17,7 +17,6 @@ NARUTO_URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accep
 
 
 def main():
-    logging.basicConfig(level=logging.INFO)
     parse_args()
 
 
@@ -55,6 +54,8 @@ def naruto(args):
 
 def parse_args():
     parser = ArgumentParser(description='RoboSanta CLI')
+    parser.add_argument('-q', '--quiet', action='store_true')
+
     subparsers = parser.add_subparsers(help='sub-command help')
 
     room_param_args = ('-r', '--room')
@@ -70,6 +71,12 @@ def parse_args():
     chat_parser.set_defaults(func=chat)
 
     args = parser.parse_args()
+
+    if args.quiet:
+        logging.basicConfig(level=logging.WARN)
+    else:
+        logging.basicConfig(level=logging.INFO)
+
     args.func(args)
 
 
