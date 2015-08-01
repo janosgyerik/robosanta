@@ -1,6 +1,6 @@
 import logging
 
-from . import browser
+from robosanta.stackexchange.chat import browser
 
 
 class Client(object):
