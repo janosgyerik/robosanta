@@ -51,13 +51,17 @@ def naruto(args):
 
 def parse_args():
     parser = ArgumentParser(description='RoboSanta CLI')
-    parser.add_argument('-r', '--room', metavar='ROOM_ID', dest='room_id', default=settings.ROOM_ID)
     subparsers = parser.add_subparsers(help='sub-command help')
 
+    room_param_args = ('-r', '--room')
+    room_param_kwargs = {'metavar': 'ROOM_ID', 'dest': 'room_id', 'default': settings.ROOM_ID}
+
     naruto_parser = subparsers.add_parser('naruto', help='Post a Naruto answer to The 2nd Monitor')
+    naruto_parser.add_argument(*room_param_args, **room_param_kwargs)
     naruto_parser.set_defaults(func=naruto)
 
     chat_parser = subparsers.add_parser('chat', help='Post a message in chat (debugging)')
+    chat_parser.add_argument(*room_param_args, **room_param_kwargs)
     chat_parser.add_argument('message')
     chat_parser.set_defaults(func=chat)
 
