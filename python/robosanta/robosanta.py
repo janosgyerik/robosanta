@@ -2,6 +2,7 @@
 
 import logging
 from argparse import ArgumentParser
+import os
 
 import random
 from bs4 import BeautifulSoup
@@ -15,6 +16,7 @@ import settings
 
 NARUTO_URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score'
 NARUTO_INTRO_MESSAGE = 'hm, accepted answer with 0 score...'
+NARUTO_CACHE = '.cache/naruto.html'
 
 
 def main():
@@ -26,13 +28,23 @@ def chat(args):
 
 
 def naruto(args):
-    logging.info('fetching naruto posts')
-    data = requests.get(NARUTO_URL).text
-    soup = BeautifulSoup(data)
-    # with open(path) as fh:
-    # soup = BeautifulSoup(fh)
+    logging.info('fetching Naruto posts')
+    soup = BeautifulSoup(requests.get(NARUTO_URL).text)
 
-    answer_ids = [value['id'] for value in queries.get_column(soup, 'Post Link')]
+    def extract_answer_ids():
+        data = queries.get_column(soup, 'Post Link')
+        return [value['id'] for value in data]
+
+    answer_ids = extract_answer_ids()
+
+    if not answer_ids:
+        logging.error('no Naruto posts...')
+        if os.path.exists(NARUTO_CACHE):
+            logging.info('using previous cache of Naruto posts')
+            with open(NARUTO_CACHE) as fh:
+                soup = BeautifulSoup(fh)
+            answer_ids = extract_answer_ids()
+
     random.shuffle(answer_ids)
 
     cr = CodeReview()
@@ -47,13 +59,18 @@ def naruto(args):
             continue
 
         if answer and answer.score == 0:
-            send_message(args.room_id, NARUTO_INTRO_MESSAGE)
-            send_message(args.room_id, answer.url)
+            if not args.debug:
+                send_message(args.room_id, NARUTO_INTRO_MESSAGE)
+                send_message(args.room_id, answer.url)
+            else:
+                logging.info('would send: {} <- {}'.format(args.room_id, NARUTO_INTRO_MESSAGE))
+                logging.info('would send: {} <- {}'.format(args.room_id, answer.url))
             break
 
 
 def parse_args():
     parser = ArgumentParser(description='RoboSanta CLI')
+    parser.add_argument('-d', '--debug', action='store_true')
     parser.add_argument('-q', '--quiet', action='store_true')
 
     subparsers = parser.add_subparsers(help='sub-command help')
