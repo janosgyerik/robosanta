@@ -65,6 +65,10 @@ def naruto(args):
         if answer.owner_id in settings.EXCLUDED_OWNERS:
             continue
 
+        question = cr.question(answer.question_id)
+        if 'closed_date' in question.json:
+            continue
+
         if answer and answer.score == 0:
             if not args.debug:
                 # send_message(args.room_id, NARUTO_INTRO_MESSAGE)
