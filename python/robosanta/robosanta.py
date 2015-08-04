@@ -63,7 +63,7 @@ def naruto(args):
                 send_message(args.room_id, NARUTO_INTRO_MESSAGE)
                 send_message(args.room_id, answer.url)
             else:
-                logging.info('would send: {} <- {}'.format(args.room_id, NARUTO_INTRO_MESSAGE))
+                # logging.info('would send: {} <- {}'.format(args.room_id, NARUTO_INTRO_MESSAGE))
                 logging.info('would send: {} <- {}'.format(args.room_id, answer.url))
             break
 
