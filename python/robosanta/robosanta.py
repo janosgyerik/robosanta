@@ -29,7 +29,8 @@ def chat(args):
 
 def naruto(args):
     logging.info('fetching Naruto posts')
-    soup = BeautifulSoup(requests.get(NARUTO_URL).text)
+    html = requests.get(NARUTO_URL).text
+    soup = BeautifulSoup(html)
 
     def extract_answer_ids():
         data = queries.get_column(soup, 'Post Link')
@@ -37,13 +38,19 @@ def naruto(args):
 
     answer_ids = extract_answer_ids()
 
-    if not answer_ids:
-        logging.error('no Naruto posts...')
+    if answer_ids:
+        logging.info('updating Naruto cache')
+        with open(NARUTO_CACHE, 'w') as fh:
+            fh.write(html)
+    else:
+        logging.warning('no Naruto posts...')
         if os.path.exists(NARUTO_CACHE):
             logging.info('using previous cache of Naruto posts')
             with open(NARUTO_CACHE) as fh:
                 soup = BeautifulSoup(fh)
             answer_ids = extract_answer_ids()
+        else:
+            answer_ids = []
 
     random.shuffle(answer_ids)
 
