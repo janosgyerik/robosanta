@@ -63,10 +63,12 @@ def naruto(args):
             continue
 
         if answer.owner_id in settings.EXCLUDED_OWNERS:
+            logging.warning('owner excluded, skip: {}'.format(answer.url))
             continue
 
         question = cr.question(answer.question_id)
         if 'closed_date' in question.json:
+            logging.warning('question closed, skip: {}'.format(answer.url))
             continue
 
         if answer and answer.score == 0:
