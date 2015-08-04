@@ -67,7 +67,7 @@ def naruto(args):
 
         if answer and answer.score == 0:
             if not args.debug:
-                send_message(args.room_id, NARUTO_INTRO_MESSAGE)
+                # send_message(args.room_id, NARUTO_INTRO_MESSAGE)
                 send_message(args.room_id, answer.url)
             else:
                 # logging.info('would send: {} <- {}'.format(args.room_id, NARUTO_INTRO_MESSAGE))
