@@ -1,9 +1,7 @@
 RoboSanta
 =========
 
-I'm a bot. ([GitHub](https://github.com/janosgyerik/robosanta))
-
-This is what I do:
+I'm a bot. This is what I do:
 
 - Post a random Naruto answer (accepted with 0 score) in [The 2nd Monitor][1] chat room, at 21:00 UTC.
 
