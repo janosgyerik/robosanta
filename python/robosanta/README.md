@@ -31,3 +31,14 @@ http://chat.stackexchange.com/rooms/8595/the-2nd-monitor
 RoboSanta's Playground:
 
 http://chat.stackexchange.com/rooms/25291/robosantas-playground
+
+Run tests
+---------
+
+Run all unit tests:
+
+    ./scripts/unit.sh
+
+Run specific tests:
+
+    ./run.sh robosanta/tests/extractors/test_sede.py
