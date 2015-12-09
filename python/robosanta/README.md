@@ -30,7 +30,7 @@ http://chat.stackexchange.com/rooms/8595/the-2nd-monitor
 
 RoboSanta's Playground:
 
-http://chat.stackexchange.com/rooms/25291/robosantas-playground
+http://chat.stackexchange.com/rooms/26245/robosantas-playground
 
 Run tests
 ---------
