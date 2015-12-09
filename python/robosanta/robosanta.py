@@ -10,7 +10,7 @@ import requests
 from stackexchange import CodeReview
 from robosanta.stackexchange.chat.client import Client
 
-from robosanta.stackexchange.data import queries
+from robosanta.extractors.sede import extract_column
 import settings
 
 
@@ -33,7 +33,7 @@ def naruto(args):
     soup = BeautifulSoup(html)
 
     def extract_answer_ids():
-        data = queries.get_column(soup, 'Post Link')
+        data = extract_column(soup, 'Post Link')
         return [value['id'] for value in data]
 
     answer_ids = extract_answer_ids()
