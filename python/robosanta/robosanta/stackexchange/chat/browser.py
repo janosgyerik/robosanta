@@ -84,4 +84,3 @@ class Browser(object):
                 'text': text,
                 'fkey': self.chat_fkey
             })
-
