@@ -1,0 +1,896 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Naruto (accepted answer with zero score) - Stack Exchange Data Explorer</title>
+
+    
+
+    <link href="/assets/css/master?v=PU873M4ewrVXMwt-WtPVhke6fbE49yebSp8oOEcFGXA1" rel="stylesheet"/>
+
+    
+    <link href="/assets/css/query?v=lt5YLCWHrgAyhSe2f7C4mEHfo1RTIHGioLniserMJmA1" rel="stylesheet"/>
+
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script src="/assets/js/master?v=xFqZswUC48Vx9hx5Omn2JVtCyy_4sJG-WYVqwDyBQ0g1"></script>
+
+
+    <script async type="text/javascript" id="mini-profiler" src="/mini-profiler-resources/includes.js?v=nQJfBOIYjHhfi57AewnjVYff4P/VeR/FJNooarpTs18=" data-version="nQJfBOIYjHhfi57AewnjVYff4P/VeR/FJNooarpTs18=" data-path="/mini-profiler-resources/" data-current-id="6cbb9550-c330-4ce4-81b5-12d39a02f225" data-ids="6cbb9550-c330-4ce4-81b5-12d39a02f225" data-position="left" data-trivial="false" data-children="false" data-max-traces="15" data-controls="false" data-authorized="true" data-toggle-shortcut="Alt+P" data-start-hidden="false" data-trivial-milliseconds="2"></script>
+
+
+    <script type="text/javascript">
+        DataExplorer.init({
+            'User.id': null,
+            'User.guessedID': null,
+            'User.hideSchema': false,
+            'User.isAuthenticated': false,
+            'Site.id': 90,
+            'WhitelistEnabled': false
+        });
+    </script>
+</head>
+<body>
+    <div id="topbar">
+        <div class="page">
+            <div class="network-items">
+                <a href="//stackexchange.com">Stack Exchange</a>
+            </div>
+            <div class="topbar-links">
+                <span class="navigation-links">
+                    <a href="/account/login?returnurl=/codereview/query/264586/naruto-accepted-answer-with-zero-score">log in</a>
+                    <a href="/help">help</a>
+                </span>
+                <div class="search-form">
+                    <form method="GET" action="/codereview/queries">
+                        <input id="q" maxlength="80" name="q" placeholder="search" size="28" tabindex="1" type="text" value="" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <div id="header">
+            <a id="logo" href="/" title="Stack Exchange Data Explorer">Stack Exchange Data Explorer</a>
+            
+<nav class="primary">
+    <div class="nav">
+        <ul>
+                <li>
+                    <a href="/" title="Home">Home</a>
+                </li>                
+                <li>
+                    <a class="youarehere" href="/codereview/queries" title="Queries">Queries</a>
+                </li>                
+                <li>
+                    <a href="/users" title="Users">Users</a>
+                </li>                
+        </ul>
+    </div>
+    <div style="float:right;" class="nav">
+        <ul>
+                <li style="margin-right:0px;">
+                    <a id="compose-button" href="/codereview/query/new" title="Compose Query">Compose Query</a>
+                </li>
+        </ul>
+    </div>
+</nav>
+            <script type="text/javascript">
+                DataExplorer.initComposeButton({
+                    IconUrl: 'http://sstatic.net/codereview/img/icon-16.png',
+                    LongName: 'Code Review'
+                });
+            </script>
+        </div>
+            <div class="subheader">
+            <h2>Naruto (accepted answer with zero score)</h2>   
+            </div>
+
+        
+
+
+<div id="query">
+    <form id="runQueryForm" action="/query/run/90/264586/474162" method='post'>
+        <div id="metadata">
+            <div class="info">
+                
+    <div id="query-voting">
+    <span title="This is a favorite query (click again to undo)" class="star-off"></span>
+    <div class="favoritecount"><strong class="">1</strong></div>
+    <div class="error-notification supernovabg">
+        <h2>
+            Please <a href="/account/login?returnurl=/codereview/query/264586/naruto-accepted-answer-with-zero-score">login or register</a> to vote for this query.</h2>
+        (click on this box to dismiss)
+    </div>
+    <script type="text/javascript">
+        DataExplorer.ready(function () {
+            DataExplorer.Voting.init('#query-voting', 264586, false, true);
+        });
+    </script>
+</div>
+    <p class='description'></p>
+
+            </div>
+            
+<div id="aboutSite">
+    <img class="site" src="//sstatic.net/codereview/img/logo.png" alt="Code Review" />
+    <p class="tagline">Q&amp;A for peer programmer code reviews</p>
+</div>
+
+            <div class="clear"></div>
+        </div>
+        
+
+
+
+<pre id="queryBodyText" class="cm-s-default"><code>DECLARE @username AS NVARCHAR(60) = ##DisplayName:string? ##;
+DECLARE @userId AS INT = ##UserId:int?-1##;
+
+SELECT TOP ##Limit:int?100##
+  u.id as [User Link],
+  p.Id as [Post Link],
+  p.CreationDate
+FROM Posts p
+  JOIN Users u ON p.OwnerUserId = u.Id
+  JOIN Posts q ON p.ParentId = q.Id AND q.OwnerUserId != u.Id
+WHERE 
+  (@username = &#39;&#39; OR u.DisplayName = @username)
+  AND (@userId = -1 OR u.Id = @userId)
+  AND p.Score = 0
+  AND p.Id = q.AcceptedAnswerId
+  AND p.OwnerUserId = u.Id
+  AND q.ClosedDate IS NULL
+  AND q.DeletionDate IS NULL
+  AND q.CommunityOwnedDate IS NULL
+ORDER BY p.CreationDate</code></pre>
+
+<table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="toolbar">
+                <a href="/codereview/query/fork/264586">fork query</a>
+        </div>
+       
+    </td>
+    <td class="post-signature">  
+<div class="user-info">
+    <div class="user-action-time">edited <span title="2015-09-23 13:46:18Z" class="relativetime">sep 23</span></div>
+</div>
+    </td>
+    <td class="post-signature">
+         <div class="user-info owner">
+    <div class="user-action-time">created <span title="2015-01-13 14:53:39Z" class="relativetime">jan 13</span></div>
+        <div class="user-gravatar32">
+                <a href="/users/13444"><img src="//www.gravatar.com/avatar/32ef4e3e388cbadc756a008cade3ee6a?s=64&amp;d=identicon&amp;r=PG" height="32px" width="32px" class="logo"></a>
+                <a href="/users/13444">Janos</a>
+        </div>
+</div>
+
+    </td>
+    </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    DataExplorer.ready(function () {
+        var formatOptions = {
+            'slug': '/naruto-accepted-answer-with-zero-score',
+            'params': window.location.search,
+            'id': 264586
+        };
+
+        DataExplorer.template('#site-selector a.templated', 'href', formatOptions);
+        DataExplorer.SiteSwitcher.update(formatOptions);
+
+        $('#site-selector').show();
+    });
+</script>
+        <div id="query-params">
+            <h3>Enter Parameters</h3>
+        </div>
+        <div id="query-options">
+            <button id="submit-query" class="btn-normal" type="submit">Run Query</button>
+            <button id="cancel-query" class="btn-normal" type="button" disabled>Cancel</button>
+            <span class="options">
+                Options:
+                <label title="Return results in text format"><input type="checkbox" name="textResults" value="true" />Text-only results</label>
+                <label title="Include the execution plan for this query in the results"><input type="checkbox" name="withExecutionPlan" value="true" />Include execution plan</label>
+                        </span>
+        </div>
+<div id="captcha" style="display:none;">
+    <h4>To avoid spam queries, all anonymous users must solve a captcha</h4>
+    <div>
+ 
+       <script type="text/javascript">
+		var RecaptchaOptions = {
+			theme : 'clean',
+			tabindex : 0
+		};
+
+</script><script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6Le5RMESAAAAAC3mP6gGby1lVHSG3GM0fc0wrvES">
+
+</script><noscript>
+		<iframe src="http://www.google.com/recaptcha/api/noscript?k=6Le5RMESAAAAAC3mP6gGby1lVHSG3GM0fc0wrvES" width="500" height="300" frameborder="0">
+
+		</iframe><br /><textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea><input name="recaptcha_response_field" value="manual_challenge" type="hidden" />
+</noscript>
+    </div>
+    <div class="error-message">
+        <strong>Whoops!</strong> Looks like you didn't get the captcha quite right, please try again.
+    </div>
+    <button class="btn-normal" type="submit">I'm a Human Being!</button>
+</div>        <div class="clear"></div>
+    </form>
+    <div id="site-selector" class="result-option">
+        Switch sites:
+        <ul>
+            <li class="site-selector-related">
+                <a class="site templated related-site" href="/meta.codereview/query/:id:slug:params" title="View results on Code Review Meta">
+                    <img class="site-icon" src="http://sstatic.net/codereviewmeta/img/icon-16.png" alt="Code Review Meta" />
+                </a>
+            </li>
+            <li>
+                <input id="switch-sites" type="text" size="24" placeholder="search by name or url" />
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <div id="loading">
+        <img src="//cdn.sstatic.net/img/progress-dots.gif" alt="loading" /> Hold tight while we fetch your results
+    </div>
+    <div id="error-message" class="error-message"></div>
+    <div id="query-results" class="result-option">
+        <div class="subheader">
+            <div class="group">
+                <div class="miniTabs">
+                    <a id="resultSetsTab" class="optional" href="#resultSets">Results<span class="tab-counter" title="Change result set">[:current/:total]</span></a>
+                    <a id="messagesTab" href="#messages">Messages</a>
+                    <a id="graphTab" class="optional" href="#graph">Graph</a>
+                    <a id="executionPlanTab" class="optional" href="#executionPlan">Execution Plan</a>
+                </div>
+                <a id="resultSetsButton" class="download-button templated" title="Download results as CSV" href="/:site/:targetsites;csv/:revisionid:params">Download CSV</a>
+                <a id="executionPlanButton" class="download-button templated" title="Download execution plan as XML" href="/:site/:targetsites;plan/:revisionid:params">Download XML</a>
+            </div>
+        </div>
+        <div id="resultSets" class="panel"></div>
+        <pre id="messages" class="panel"><code></code></pre>
+        <div id="executionPlan" class="panel"></div>
+        <div id="graph" class="panel"></div>
+        <div id="execution-stats">:records returned in :time ms:cached</div>
+    </div>
+</div>
+<script src="/assets/js/query?v=KCle9LYpTOg784y7ZudjZ8cBXUXCuzfZu8X1Zr4KuCk1"></script>
+
+<script type="text/javascript">
+    DataExplorer.ready(function () {
+        if (loadCachedResults) {
+            loadCachedResults({
+  "resultSets": [
+    {
+      "columns": [
+        {
+          "name": "User Link",
+          "type": "User"
+        },
+        {
+          "name": "Post Link",
+          "type": "Post"
+        },
+        {
+          "name": "CreationDate",
+          "type": "Date"
+        }
+      ],
+      "rows": [
+        [
+          {
+            "id": 12040,
+            "title": "mseancole"
+          },
+          {
+            "id": 12144,
+            "title": "TinyMVC Model \/ Plugin how to implement?"
+          },
+          1338304381360
+        ],
+        [
+          {
+            "id": 14370,
+            "title": "Flambino"
+          },
+          {
+            "id": 13224,
+            "title": "Encapsulation of client side logic in web page"
+          },
+          1341070257150
+        ],
+        [
+          {
+            "id": 14559,
+            "title": "Dougui"
+          },
+          {
+            "id": 13542,
+            "title": "Rails app query form code behind"
+          },
+          1342024306303
+        ],
+        [
+          {
+            "id": 8109,
+            "title": "Greg D'Arcy"
+          },
+          {
+            "id": 20870,
+            "title": "Reading fields idiomatically"
+          },
+          1359047760327
+        ],
+        [
+          {
+            "id": 22581,
+            "title": "p.s.w.g"
+          },
+          {
+            "id": 25280,
+            "title": "Best way to check for one of two values in an array in PHP"
+          },
+          1366410366140
+        ],
+        [
+          {
+            "id": 15893,
+            "title": "unholysampler"
+          },
+          {
+            "id": 55173,
+            "title": "Using a decorator to apply an inherited method to all child objects of the inherited type"
+          },
+          1403647022997
+        ],
+        [
+          {
+            "id": 12390,
+            "title": "janos"
+          },
+          {
+            "id": 69210,
+            "title": "Regex to find addresses and phone numbers"
+          },
+          1415404240600
+        ],
+        [
+          {
+            "id": 40788,
+            "title": "JvR"
+          },
+          {
+            "id": 70703,
+            "title": "Nearest point using 2D tree, static variable for the closest point so far"
+          },
+          1416835155830
+        ],
+        [
+          {
+            "id": 54718,
+            "title": "Caridorc"
+          },
+          {
+            "id": 80521,
+            "title": "Checking for duplicate values in database with Python"
+          },
+          1423918778763
+        ],
+        [
+          {
+            "id": 12390,
+            "title": "janos"
+          },
+          {
+            "id": 82262,
+            "title": "Use of static factory methods for vectors and matrices library"
+          },
+          1424598793097
+        ],
+        [
+          {
+            "id": 12390,
+            "title": "janos"
+          },
+          {
+            "id": 82813,
+            "title": "OVH email manager script using docopt"
+          },
+          1425118301773
+        ],
+        [
+          {
+            "id": 37536,
+            "title": "Neil Masters"
+          },
+          {
+            "id": 83349,
+            "title": "Choosing a color based on exam score"
+          },
+          1425593671920
+        ],
+        [
+          {
+            "id": 30212,
+            "title": "VoiceOfUnreason"
+          },
+          {
+            "id": 85101,
+            "title": "Submitting callable tasks to a variable number of Threads in a ThreadPool"
+          },
+          1427400602130
+        ],
+        [
+          {
+            "id": 14363,
+            "title": "maaartinus"
+          },
+          {
+            "id": 87373,
+            "title": "Simulating MixIns with Java"
+          },
+          1429471572817
+        ],
+        [
+          {
+            "id": 11913,
+            "title": "OldCurmudgeon"
+          },
+          {
+            "id": 88445,
+            "title": "Algorithm that checks if a tree is full and complete"
+          },
+          1430389091280
+        ],
+        [
+          {
+            "id": 75176,
+            "title": "paul bica"
+          },
+          {
+            "id": 93130,
+            "title": "Conditionally copy columns"
+          },
+          1433871133180
+        ],
+        [
+          {
+            "id": 30786,
+            "title": "Vince Panuccio"
+          },
+          {
+            "id": 96292,
+            "title": "Best place to locate filters in MVC n-layer web application and should I use services\/repositories in them?"
+          },
+          1436401780433
+        ],
+        [
+          {
+            "id": 11919,
+            "title": "Joseph the Dreamer"
+          },
+          {
+            "id": 97035,
+            "title": "Find first unique number from array"
+          },
+          1436985671250
+        ],
+        [
+          {
+            "id": 12390,
+            "title": "janos"
+          },
+          {
+            "id": 98763,
+            "title": "Create a text index of files"
+          },
+          1438445205120
+        ],
+        [
+          {
+            "id": 59481,
+            "title": "SirPython"
+          },
+          {
+            "id": 100370,
+            "title": "Create folder and export resolution ratios for artboard"
+          },
+          1439064382973
+        ],
+        [
+          {
+            "id": 12390,
+            "title": "janos"
+          },
+          {
+            "id": 102215,
+            "title": "Rock, Paper, Scissors, Lizard and Spock - Relational Paradigm"
+          },
+          1440794824387
+        ],
+        [
+          {
+            "id": 21727,
+            "title": "Robert Snyder"
+          },
+          {
+            "id": 105851,
+            "title": "Create Form Controls based on the properties of a class"
+          },
+          1443379559720
+        ],
+        [
+          {
+            "id": 81993,
+            "title": "Antot"
+          },
+          {
+            "id": 106024,
+            "title": "Having graphics resize in line with the Frame in Swing"
+          },
+          1443544076360
+        ],
+        [
+          {
+            "id": 60970,
+            "title": "vmariano"
+          },
+          {
+            "id": 106282,
+            "title": "Drills: A JavaScript web application that creates customizable workout routines and reads commands aloud while keeping track of time"
+          },
+          1443720913200
+        ],
+        [
+          {
+            "id": 54031,
+            "title": "Rick Davin"
+          },
+          {
+            "id": 106854,
+            "title": "Custom Prime Sieve"
+          },
+          1444238077277
+        ],
+        [
+          {
+            "id": 23788,
+            "title": "Mat's Mug"
+          },
+          {
+            "id": 106900,
+            "title": "Redis Object storage and convertion"
+          },
+          1444276374487
+        ],
+        [
+          {
+            "id": 47364,
+            "title": "Greg Burghardt"
+          },
+          {
+            "id": 107530,
+            "title": "Resolve entity behaviour based on enumeration type"
+          },
+          1444832378117
+        ],
+        [
+          {
+            "id": 12240,
+            "title": "hjpotter92"
+          },
+          {
+            "id": 107547,
+            "title": "MySQL data fetching without page refresh"
+          },
+          1444840004673
+        ],
+        [
+          {
+            "id": 54571,
+            "title": "ferada"
+          },
+          {
+            "id": 108080,
+            "title": "Convert zip to gzip and upload to S3 bucket"
+          },
+          1445297742740
+        ],
+        [
+          {
+            "id": 86779,
+            "title": "Zulan"
+          },
+          {
+            "id": 108136,
+            "title": "Simple neural-network simulation in C++ (Round 3)"
+          },
+          1445347593467
+        ],
+        [
+          {
+            "id": 5483,
+            "title": "Jodes"
+          },
+          {
+            "id": 108663,
+            "title": "Compare multidimensional arrays"
+          },
+          1445777827473
+        ],
+        [
+          {
+            "id": 86909,
+            "title": "Wildcard"
+          },
+          {
+            "id": 108972,
+            "title": "Installation script for Mac OS tool"
+          },
+          1446012085343
+        ],
+        [
+          {
+            "id": 12934,
+            "title": "maple_shaft"
+          },
+          {
+            "id": 109107,
+            "title": "Algorithm to find edges of groups of intersections running to slow"
+          },
+          1446120583977
+        ],
+        [
+          {
+            "id": 12390,
+            "title": "janos"
+          },
+          {
+            "id": 109326,
+            "title": "Simple JavaScript timer function"
+          },
+          1446243486793
+        ],
+        [
+          {
+            "id": 12390,
+            "title": "janos"
+          },
+          {
+            "id": 110062,
+            "title": "Updating a .txt file"
+          },
+          1446846828217
+        ],
+        [
+          {
+            "id": 85815,
+            "title": "Spike"
+          },
+          {
+            "id": 110240,
+            "title": "Finding the object and the URL associated with a notification"
+          },
+          1447070847003
+        ],
+        [
+          {
+            "id": 9593,
+            "title": "Doc Brown"
+          },
+          {
+            "id": 110549,
+            "title": "Trying to Simplify a Java Method"
+          },
+          1447313365867
+        ],
+        [
+          {
+            "id": 47364,
+            "title": "Greg Burghardt"
+          },
+          {
+            "id": 110909,
+            "title": "Gallery of thumbnail images with modal enlargement when clicked"
+          },
+          1447686426337
+        ],
+        [
+          {
+            "id": 32061,
+            "title": "ratchet freak"
+          },
+          {
+            "id": 111004,
+            "title": "Mergesort performance in C"
+          },
+          1447758811257
+        ],
+        [
+          {
+            "id": 2035,
+            "title": "RoToRa"
+          },
+          {
+            "id": 111108,
+            "title": "JavaScript ajax formquestion editor"
+          },
+          1447860665017
+        ],
+        [
+          {
+            "id": 11919,
+            "title": "Joseph the Dreamer"
+          },
+          {
+            "id": 111263,
+            "title": "Updating state with React"
+          },
+          1447976949420
+        ],
+        [
+          {
+            "id": 40480,
+            "title": "vnp"
+          },
+          {
+            "id": 111349,
+            "title": "Graph radius in Java"
+          },
+          1448044828683
+        ],
+        [
+          {
+            "id": 12390,
+            "title": "janos"
+          },
+          {
+            "id": 111491,
+            "title": "Copying files into Dropbox folder from command line"
+          },
+          1448200549403
+        ],
+        [
+          {
+            "id": 42401,
+            "title": "Joe Wallis"
+          },
+          {
+            "id": 111540,
+            "title": "Basic prime summation"
+          },
+          1448233740453
+        ],
+        [
+          {
+            "id": 71165,
+            "title": "Gary Storey"
+          },
+          {
+            "id": 111606,
+            "title": "Toggle functions for drop down for a clock time widget"
+          },
+          1448299942050
+        ],
+        [
+          {
+            "id": 63835,
+            "title": "Pavlo"
+          },
+          {
+            "id": 111876,
+            "title": "Socket.io wrapper for an app with ReactJS components"
+          },
+          1448526701597
+        ],
+        [
+          {
+            "id": 49695,
+            "title": "tim"
+          },
+          {
+            "id": 112175,
+            "title": "Php Login Class - Security and Logic check"
+          },
+          1448740386393
+        ],
+        [
+          {
+            "id": 59481,
+            "title": "SirPython"
+          },
+          {
+            "id": 112273,
+            "title": "Find the first unique character in a string"
+          },
+          1448848319343
+        ],
+        [
+          {
+            "id": 71165,
+            "title": "Gary Storey"
+          },
+          {
+            "id": 112468,
+            "title": "Simplify a Jquery code"
+          },
+          1448992230420
+        ]
+      ],
+      "messagePosition": 0,
+      "truncated": false
+    }
+  ],
+  "executionPlan": null,
+  "targetSites": 0,
+  "messages": "(50 row(s) returned)\n\n",
+  "url": "http:\/\/codereview.stackexchange.com",
+  "siteId": 90,
+  "siteName": "codereview",
+  "queryId": 0,
+  "totalResults": 0,
+  "maxResults": 0,
+  "firstRun": "Dec 9 2015",
+  "truncated": false,
+  "slug": "naruto-accepted-answer-with-zero-score",
+  "textOnly": false,
+  "parentId": null,
+  "revisionId": 474162,
+  "fromCache": false,
+  "querySetId": 264586,
+  "created": null,
+  "executionTime": 0
+});
+        }
+    });
+
+    DataExplorer.SiteSwitcher.init('#switch-sites', '/:site/query/:id:slug:params');
+</script>
+        
+    </div>
+    <div id="footer">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <a href="/about">help</a>
+                <a href="http://stackexchange.com/sites">sites</a>
+                <a href="http://blog.stackexchange.com">blog</a>
+                <a href="http://chat.stackexchange.com/rooms/13526/sede-stack-exchange-data-explorer">chat</a>
+                <a href="http://data.stackexchange.com">data</a>
+                <a href="http://stackexchange.com/legal">legal</a>
+                <strong><a href="http://meta.stackexchange.com/contact">contact us</a></strong>
+                <strong><a href="http://meta.stackexchange.com">feedback</a></strong>
+            </div>
+            <div id="copyright">
+                site design / logo &copy; 2015 Stack Exchange Inc; 
+                user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a>
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="revision">rev 2015.11.24.46</div>
+        </div>
+    </div>
+    <noscript>
+        <div id="noscript-warning">
+            Data Explorer works best with JavaScript enabled</div>
+    </noscript>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-50203-8']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
