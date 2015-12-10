@@ -3,7 +3,7 @@ import json
 
 def extract_column(soup, colname):
     """
-    Returns generator of cell values in selected column.
+    Returns a generator of cell values in selected column.
 
     For simple columns like timestamp, a cell value can be simple,
     for example: 1414433013197
