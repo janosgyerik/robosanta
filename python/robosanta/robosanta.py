@@ -19,10 +19,6 @@ NARUTO_INTRO_MESSAGE = 'hm, accepted answer with 0 score...'
 NARUTO_CACHE = '.cache/naruto.html'
 
 
-def main():
-    parse_args()
-
-
 def chat(args):
     send_message(args.room_id, args.message)
 
@@ -81,6 +77,15 @@ def naruto(args):
             break
 
 
+def send_message(room_id, message):
+    email = settings.EMAIL
+    password = settings.PASSWORD
+
+    client = Client()
+    client.login(email, password)
+    client.send_message(room_id, message)
+
+
 def parse_args():
     parser = ArgumentParser(description='RoboSanta CLI')
     parser.add_argument('-d', '--debug', action='store_true')
@@ -110,13 +115,8 @@ def parse_args():
     args.func(args)
 
 
-def send_message(room_id, message):
-    email = settings.EMAIL
-    password = settings.PASSWORD
-
-    client = Client()
-    client.login(email, password)
-    client.send_message(room_id, message)
+def main():
+    parse_args()
 
 
 if __name__ == '__main__':
