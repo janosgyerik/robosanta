@@ -13,7 +13,7 @@ from robosanta.stackexchange.sede import extract_column
 from stackexchange import CodeReview
 
 NARUTO_URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score'
-NARUTO_INTRO_MESSAGE = 'hm, accepted answer with 0 score...'
+NARUTO_INTRO_MESSAGE = 'Accepted non-selfie answer with 0 score:'
 NARUTO_CACHE = '.cache/naruto.html'
 
 
@@ -94,7 +94,7 @@ def parse_args():
     room_param_args = ('-r', '--room')
     room_param_kwargs = {'metavar': 'ROOM_ID', 'dest': 'room_id', 'default': settings.ROOM_ID}
 
-    naruto_parser = subparsers.add_parser('naruto', help='Post a Naruto answer to The 2nd Monitor')
+    naruto_parser = subparsers.add_parser('naruto', help='Post a Naruto answer')
     naruto_parser.add_argument(*room_param_args, **room_param_kwargs)
     naruto_parser.set_defaults(func=naruto)
 
