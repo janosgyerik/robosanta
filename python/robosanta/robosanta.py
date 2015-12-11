@@ -17,11 +17,7 @@ NARUTO_INTRO_MESSAGE = 'Accepted non-selfie answer with 0 score:'
 NARUTO_CACHE = '.cache/naruto.html'
 
 
-def chat(args):
-    send_message(args.room_id, args.message)
-
-
-def naruto(args):
+def naruto():
     logging.info('fetching Naruto posts')
     html = requests.get(NARUTO_URL).text
     soup = BeautifulSoup(html)
@@ -66,13 +62,7 @@ def naruto(args):
             continue
 
         if answer and answer.score == 0:
-            if not args.debug:
-                # send_message(args.room_id, NARUTO_INTRO_MESSAGE)
-                send_message(args.room_id, answer.url)
-            else:
-                # logging.info('would send: {} <- {}'.format(args.room_id, NARUTO_INTRO_MESSAGE))
-                logging.info('would send: {} <- {}'.format(args.room_id, answer.url))
-            break
+            return [NARUTO_INTRO_MESSAGE, answer.url]
 
 
 def send_message(room_id, message):
@@ -86,22 +76,11 @@ def send_message(room_id, message):
 
 def parse_args():
     parser = ArgumentParser(description='RoboSanta CLI')
-    parser.add_argument('-d', '--debug', action='store_true')
+    parser.add_argument('-n', '--dry-run', action='store_true')
     parser.add_argument('-q', '--quiet', action='store_true')
-
-    subparsers = parser.add_subparsers(help='sub-command help')
-
-    room_param_args = ('-r', '--room')
-    room_param_kwargs = {'metavar': 'ROOM_ID', 'dest': 'room_id', 'default': settings.ROOM_ID}
-
-    naruto_parser = subparsers.add_parser('naruto', help='Post a Naruto answer')
-    naruto_parser.add_argument(*room_param_args, **room_param_kwargs)
-    naruto_parser.set_defaults(func=naruto)
-
-    chat_parser = subparsers.add_parser('chat', help='Post a message in a chat room')
-    chat_parser.add_argument(*room_param_args, **room_param_kwargs)
-    chat_parser.add_argument('message')
-    chat_parser.set_defaults(func=chat)
+    parser.add_argument('-r', '--rooms', metavar='ROOMS', default=str(settings.ROOM_ID))
+    parser.add_argument('--naruto', action='store_true', help='Post a Naruto answer')
+    parser.add_argument('-m', '--message', help='Post a message in a chat room', nargs='+')
 
     args = parser.parse_args()
 
@@ -110,7 +89,22 @@ def parse_args():
     else:
         logging.basicConfig(level=logging.INFO)
 
-    args.func(args)
+    rooms = args.rooms.split(',')
+
+    if args.message:
+        messages = [' '.join(args.message)]
+    elif args.naruto:
+        messages = naruto()
+    else:
+        return
+
+    if messages:
+        for room_id in rooms:
+            for message in messages:
+                if not args.dry_run:
+                    send_message(room_id, message)
+                else:
+                    logging.info('would send to {}: {}'.format(room_id, message))
 
 
 def main():
