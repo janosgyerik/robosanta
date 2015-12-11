@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
 
 import logging
-from argparse import ArgumentParser
 import os
-
 import random
-from bs4 import BeautifulSoup
+from argparse import ArgumentParser
+
 import requests
-from stackexchange import CodeReview
-from robosanta.stackexchange.chat.client import Client
-
-from robosanta.extractors.sede import extract_column
 import settings
-
+from bs4 import BeautifulSoup
+from robosanta.stackexchange.chat.client import Client
+from robosanta.stackexchange.sede import extract_column
+from stackexchange import CodeReview
 
 NARUTO_URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score'
 NARUTO_INTRO_MESSAGE = 'hm, accepted answer with 0 score...'

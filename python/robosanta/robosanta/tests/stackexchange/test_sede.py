@@ -1,9 +1,8 @@
 import os
-
 import unittest
 
 from bs4 import BeautifulSoup
-from robosanta.extractors.sede import extract_column
+from robosanta.stackexchange.sede import extract_column
 
 BASE_DIR = os.path.dirname(__file__)
 
