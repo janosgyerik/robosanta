@@ -80,7 +80,7 @@ def parse_args():
     parser.add_argument('-q', '--quiet', action='store_true')
     parser.add_argument('-r', '--rooms', metavar='ROOMS', default=str(settings.ROOM_ID))
     parser.add_argument('--naruto', action='store_true', help='Post a Naruto answer')
-    parser.add_argument('-m', '--message', help='Post a message in a chat room', nargs='+')
+    parser.add_argument('-m', '--message', help='Post a message in a chat room')
 
     args = parser.parse_args()
 
@@ -92,7 +92,7 @@ def parse_args():
     rooms = args.rooms.split(',')
 
     if args.message:
-        messages = [' '.join(args.message)]
+        messages = [args.message]
     elif args.naruto:
         messages = naruto()
     else:
