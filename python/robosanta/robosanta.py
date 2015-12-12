@@ -65,13 +65,13 @@ def naruto():
             return [NARUTO_INTRO_MESSAGE, answer.url]
 
 
-def send_message(room_id, message):
+def post_message(room_id, message):
     email = settings.EMAIL
     password = settings.PASSWORD
 
     client = Client()
     client.login(email, password)
-    client.send_message(room_id, message)
+    client.post_message(room_id, message)
 
 
 def parse_args():
@@ -102,9 +102,9 @@ def parse_args():
         for room_id in rooms:
             for message in messages:
                 if not args.dry_run:
-                    send_message(room_id, message)
+                    post_message(room_id, message)
                 else:
-                    logging.info('would send to {}: {}'.format(room_id, message))
+                    logging.info('would post to {}: {}'.format(room_id, message))
 
 
 def main():

@@ -16,6 +16,6 @@ class Client(object):
 
         logging.info("Login OK")
 
-    def send_message(self, room_id, text):
+    def post_message(self, room_id, text):
         logging.info('sending message to room {}: {}'.format(room_id, text))
         self._browser.send_message(room_id, text)
