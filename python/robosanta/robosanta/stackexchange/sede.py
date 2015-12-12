@@ -1,5 +1,7 @@
 import json
 
+from robosanta.download import fetch_soup
+
 
 def extract_column(soup, colname):
     """
@@ -20,6 +22,7 @@ def extract_column(soup, colname):
     :param colname: name of the SEDE column to extract
     :return: generator of cell values in selected column
     """
+
     def get_column_index():
         for index, info in enumerate(columns):
             if info['name'] == colname:
@@ -41,3 +44,57 @@ def extract_column(soup, colname):
             if column_index > -1:
                 for row in rows:
                     yield row[column_index]
+
+
+def transform_columns_meta(se_columns_meta):
+    columns_meta = {}
+
+    for index, se_col_meta in enumerate(se_columns_meta):
+        col_meta = {'index': index}
+        col_meta.update(se_col_meta)
+        columns_meta[se_col_meta['name']] = col_meta
+
+    return columns_meta
+
+
+def extract_table(soup):
+
+    for script in soup.findAll('script'):
+        result_sets_col = 'resultSets'
+        if result_sets_col in script.text:
+            start = script.text.rindex('{', 0, script.text.index(result_sets_col))
+            end = script.text.index('}', script.text.index('querySetId')) + 1
+            data = json.loads(script.text[start:end])
+
+            results = data[result_sets_col][0]
+            columns = transform_columns_meta(results['columns'])
+            rows = results['rows']
+
+            return columns, rows
+
+    return {}, []
+
+
+def fetch_table(label, url):
+    """
+    Fetch a URL using `fetch_soup` and extract a table as a tuple of {cols} and [rows].
+    {cols} is a mapping of column names to column meta data, see more details below.
+    [rows] is a list of rows in the table.
+
+    Example values of {cols}:
+        {
+            'name': {
+                'index': 0,
+                'type': 'User',
+            }
+        }
+
+    :param label: a simple name to represent the URL, it will be used as the cache filename
+    :param url: the URL to download
+    :return: a tuple of ({cols}, [rows])
+    """
+    soup = fetch_soup(label, url)
+    if not soup:
+        return {}, []
+
+    return extract_table(soup)
