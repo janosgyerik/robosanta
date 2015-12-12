@@ -41,13 +41,12 @@ def parse_args():
     else:
         return
 
-    if messages:
-        for room_id in rooms:
-            for message in messages:
-                if not args.dry_run:
-                    post_message(room_id, message)
-                else:
-                    logging.info('would post to {}: {}'.format(room_id, message))
+    for room_id in rooms:
+        for message in messages:
+            if not args.dry_run:
+                post_message(room_id, message)
+            else:
+                logging.info('would post to {}: {}'.format(room_id, message))
 
 
 def main():
