@@ -1,68 +1,11 @@
 #!/usr/bin/env python3
 
 import logging
-import os
-import random
 from argparse import ArgumentParser
 
-import requests
 import settings
-from bs4 import BeautifulSoup
+from robosanta.plugins.naruto import pick_naruto_message
 from robosanta.stackexchange.chat.client import Client
-from robosanta.stackexchange.sede import extract_column
-from stackexchange import CodeReview
-
-NARUTO_URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score'
-NARUTO_INTRO_MESSAGE = 'Accepted non-selfie answer with 0 score:'
-NARUTO_CACHE = '.cache/naruto.html'
-
-
-def naruto():
-    logging.info('fetching Naruto posts')
-    html = requests.get(NARUTO_URL).text
-    soup = BeautifulSoup(html)
-
-    def extract_answer_ids():
-        data = extract_column(soup, 'Post Link')
-        return [value['id'] for value in data]
-
-    answer_ids = extract_answer_ids()
-
-    if answer_ids:
-        logging.info('updating Naruto cache')
-        with open(NARUTO_CACHE, 'w') as fh:
-            fh.write(html)
-    else:
-        logging.warning('no Naruto posts...')
-        if os.path.exists(NARUTO_CACHE):
-            logging.info('using previous cache of Naruto posts')
-            with open(NARUTO_CACHE) as fh:
-                soup = BeautifulSoup(fh)
-            answer_ids = extract_answer_ids()
-        else:
-            answer_ids = []
-
-    random.shuffle(answer_ids)
-
-    cr = CodeReview()
-    for answer_id in answer_ids:
-        try:
-            logging.info('fetching answer {}'.format(answer_id))
-            answer = cr.answer(answer_id)
-        except ValueError:
-            continue
-
-        if answer.owner_id in settings.EXCLUDED_OWNERS:
-            logging.warning('owner excluded, skip: {}'.format(answer.url))
-            continue
-
-        question = cr.question(answer.question_id)
-        if 'closed_date' in question.json:
-            logging.warning('question closed, skip: {}'.format(answer.url))
-            continue
-
-        if answer and answer.score == 0:
-            return [NARUTO_INTRO_MESSAGE, answer.url]
 
 
 def post_message(room_id, message):
@@ -94,7 +37,7 @@ def parse_args():
     if args.message:
         messages = [args.message]
     elif args.naruto:
-        messages = naruto()
+        messages = pick_naruto_message()
     else:
         return
 
