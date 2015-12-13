@@ -1,21 +1,11 @@
 import logging
-
-import os
 import random
-import requests
+
 import settings
-from bs4 import BeautifulSoup
-from robosanta.stackexchange.sede import extract_column
+from robosanta.stackexchange import sede
 from stackexchange import CodeReview
 
 ''' TODO : better separation of concerns
-caching sede downloader
-  try to download
-  if not empty: update cache, return content
-  else
-    log a warning
-    return from cache
-
 message provider
   message = optional intro + link
 
@@ -30,10 +20,10 @@ naruto message provider
     column to pick
   filter logic:
     fetch answer
-    reject if author is in exclusion list
+    +reject if author is in exclusion list
     reject if answer author is same as question author
     reject if question is closed
-    reject if answer score is not 0
+    +reject if answer score is not 0
     accept
 
 forgotten zombie message provider
@@ -51,36 +41,15 @@ forgotten zombie message provider
     accept
 '''
 
-
 NARUTO_URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score'
 NARUTO_INTRO_MESSAGE = 'Accepted non-selfie answer with 0 score:'
-NARUTO_CACHE = '.cache/naruto.html'
 
 
 def pick_naruto_message():
-    logging.info('fetching Naruto posts')
-    html = requests.get(NARUTO_URL).text
-    soup = BeautifulSoup(html)
+    cols, rows = sede.fetch_table('naruto', NARUTO_URL)
 
-    def extract_answer_ids():
-        data = extract_column(soup, 'Post Link')
-        return [value['id'] for value in data]
-
-    answer_ids = extract_answer_ids()
-
-    if answer_ids:
-        logging.info('updating Naruto cache')
-        with open(NARUTO_CACHE, 'w') as fh:
-            fh.write(html)
-    else:
-        logging.warning('no Naruto posts...')
-        if os.path.exists(NARUTO_CACHE):
-            logging.info('using previous cache of Naruto posts')
-            with open(NARUTO_CACHE) as fh:
-                soup = BeautifulSoup(fh)
-            answer_ids = extract_answer_ids()
-        else:
-            answer_ids = []
+    answer_id_index = cols['Post Link']['index']
+    answer_ids = [row[answer_id_index]['id'] for row in rows]
 
     random.shuffle(answer_ids)
 
