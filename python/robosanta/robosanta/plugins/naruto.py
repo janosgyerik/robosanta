@@ -55,14 +55,15 @@ def pick_naruto_message():
 
     cr = CodeReview()
     for answer_id in answer_ids:
+        logging.info('fetching answer {}'.format(answer_id))
         try:
-            logging.info('fetching answer {}'.format(answer_id))
             answer = cr.answer(answer_id)
-        except ValueError:
+        except ValueError as e:
+            logging.error('error when fetching answer: '.format(e))
             continue
 
         if answer.owner_id in settings.EXCLUDED_OWNERS:
-            logging.warning('owner excluded, skip: {}'.format(answer.url))
+            logging.info('owner excluded, skip: {}'.format(answer.url))
             continue
 
         question = cr.question(answer.question_id)
@@ -70,5 +71,8 @@ def pick_naruto_message():
             logging.warning('question closed, skip: {}'.format(answer.url))
             continue
 
-        if answer and answer.score == 0:
-            return [NARUTO_INTRO_MESSAGE, answer.url]
+        if answer.score != 0:
+            logging.warning('score not zero, skip: {}'.format(answer.url))
+            continue
+
+        return [NARUTO_INTRO_MESSAGE, answer.url]
