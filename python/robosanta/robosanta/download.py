@@ -8,16 +8,14 @@ BASE_DIR = os.path.dirname(__file__)
 CACHE_DIR = os.path.join(BASE_DIR, '.cache')
 
 
-def is_valid(soup):
-    for script in soup.findAll('script'):
-        result_sets_col = 'resultSets'
-        if result_sets_col in script.text:
-            return True
-
-    return False
-
-
 def fetch_soup(label, url):
+    def is_valid(soup):
+        for script in soup.findAll('script'):
+            result_sets_col = 'resultSets'
+            if result_sets_col in script.text:
+                return True
+        return False
+
     if not os.path.isdir(CACHE_DIR):
         os.mkdir(CACHE_DIR)
 
