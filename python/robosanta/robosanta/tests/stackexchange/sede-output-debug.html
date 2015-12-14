@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>Naruto (accepted answer with zero score) - Stack Exchange Data Explorer</title>
+
+    
+
+    <link href="/assets/css/master?v=PU873M4ewrVXMwt-WtPVhke6fbE49yebSp8oOEcFGXA1" rel="stylesheet"/>
+
+    
+    <link href="/assets/css/query?v=lt5YLCWHrgAyhSe2f7C4mEHfo1RTIHGioLniserMJmA1" rel="stylesheet"/>
+
+
+
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script src="/assets/js/master?v=xFqZswUC48Vx9hx5Omn2JVtCyy_4sJG-WYVqwDyBQ0g1"></script>
+
+
+    <script async type="text/javascript" id="mini-profiler" src="/mini-profiler-resources/includes.js?v=nQJfBOIYjHhfi57AewnjVYff4P/VeR/FJNooarpTs18=" data-version="nQJfBOIYjHhfi57AewnjVYff4P/VeR/FJNooarpTs18=" data-path="/mini-profiler-resources/" data-current-id="ec70d350-f591-441d-943c-a95d4c19aaeb" data-ids="99733a61-a05a-44a5-96d1-59ee0cb10acb,389decf1-ec1e-4b13-b22a-28861cfa16c3,3637bebd-8071-470a-9448-9833252f5959,9c84f269-aff5-442c-b03c-3bcd0558714e,683487b1-38b9-4a66-9411-93fa43c0fff7,ba0d3274-cc73-495f-b23e-1a89694d3bbc,37c3704b-ab4d-48fb-a186-04802519d7a2,17780b1e-d97d-4fe9-ac28-eeea1132702e,56a2fcc6-795e-4773-934f-1e1a2e440d93,ec70d350-f591-441d-943c-a95d4c19aaeb" data-position="left" data-trivial="false" data-children="false" data-max-traces="15" data-controls="false" data-authorized="true" data-toggle-shortcut="Alt+P" data-start-hidden="false" data-trivial-milliseconds="2"></script>
+
+
+    <script type="text/javascript">
+        DataExplorer.init({
+            'User.id': null,
+            'User.guessedID': null,
+            'User.hideSchema': false,
+            'User.isAuthenticated': false,
+            'Site.id': 90,
+            'WhitelistEnabled': false
+        });
+    </script>
+</head>
+<body>
+    <div id="topbar">
+        <div class="page">
+            <div class="network-items">
+                <a href="//stackexchange.com">Stack Exchange</a>
+            </div>
+            <div class="topbar-links">
+                <span class="navigation-links">
+                    <a href="/account/login?returnurl=/codereview/query/264586/naruto-accepted-answer-with-zero-score">log in</a>
+                    <a href="/help">help</a>
+                </span>
+                <div class="search-form">
+                    <form method="GET" action="/codereview/queries">
+                        <input id="q" maxlength="80" name="q" placeholder="search" size="28" tabindex="1" type="text" value="" />
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="page">
+        <div id="header">
+            <a id="logo" href="/" title="Stack Exchange Data Explorer">Stack Exchange Data Explorer</a>
+            
+<nav class="primary">
+    <div class="nav">
+        <ul>
+                <li>
+                    <a href="/" title="Home">Home</a>
+                </li>                
+                <li>
+                    <a class="youarehere" href="/codereview/queries" title="Queries">Queries</a>
+                </li>                
+                <li>
+                    <a href="/users" title="Users">Users</a>
+                </li>                
+        </ul>
+    </div>
+    <div style="float:right;" class="nav">
+        <ul>
+                <li style="margin-right:0px;">
+                    <a id="compose-button" href="/codereview/query/new" title="Compose Query">Compose Query</a>
+                </li>
+        </ul>
+    </div>
+</nav>
+            <script type="text/javascript">
+                DataExplorer.initComposeButton({
+                    IconUrl: 'http://sstatic.net/codereview/img/icon-16.png',
+                    LongName: 'Code Review'
+                });
+            </script>
+        </div>
+            <div class="subheader">
+            <h2>Naruto (accepted answer with zero score)</h2>   
+            </div>
+
+        
+
+
+<div id="query">
+    <form id="runQueryForm" action="/query/run/90/264586/474162" method='post'>
+        <div id="metadata">
+            <div class="info">
+                
+    <div id="query-voting">
+    <span title="This is a favorite query (click again to undo)" class="star-off"></span>
+    <div class="favoritecount"><strong class="">1</strong></div>
+    <div class="error-notification supernovabg">
+        <h2>
+            Please <a href="/account/login?returnurl=/codereview/query/264586/naruto-accepted-answer-with-zero-score">login or register</a> to vote for this query.</h2>
+        (click on this box to dismiss)
+    </div>
+    <script type="text/javascript">
+        DataExplorer.ready(function () {
+            DataExplorer.Voting.init('#query-voting', 264586, false, true);
+        });
+    </script>
+</div>
+    <p class='description'></p>
+
+            </div>
+            
+<div id="aboutSite">
+    <img class="site" src="//sstatic.net/codereview/img/logo.png" alt="Code Review" />
+    <p class="tagline">Q&amp;A for peer programmer code reviews</p>
+</div>
+
+            <div class="clear"></div>
+        </div>
+        
+
+
+
+<pre id="queryBodyText" class="cm-s-default"><code>DECLARE @username AS NVARCHAR(60) = ##DisplayName:string? ##;
+DECLARE @userId AS INT = ##UserId:int?-1##;
+
+SELECT TOP ##Limit:int?100##
+  u.id as [User Link],
+  p.Id as [Post Link],
+  p.CreationDate
+FROM Posts p
+  JOIN Users u ON p.OwnerUserId = u.Id
+  JOIN Posts q ON p.ParentId = q.Id AND q.OwnerUserId != u.Id
+WHERE 
+  (@username = &#39;&#39; OR u.DisplayName = @username)
+  AND (@userId = -1 OR u.Id = @userId)
+  AND p.Score = 0
+  AND p.Id = q.AcceptedAnswerId
+  AND p.OwnerUserId = u.Id
+  AND q.ClosedDate IS NULL
+  AND q.DeletionDate IS NULL
+  AND q.CommunityOwnedDate IS NULL
+ORDER BY p.CreationDate</code></pre>
+
+<table class="fw">
+    <tbody><tr>
+    <td class="vt">
+        <div class="toolbar">
+                <a href="/codereview/query/fork/264586">fork query</a>
+        </div>
+       
+    </td>
+    <td class="post-signature">  
+<div class="user-info">
+    <div class="user-action-time">edited <span title="2015-09-23 13:46:18Z" class="relativetime">sep 23</span></div>
+</div>
+    </td>
+    <td class="post-signature">
+         <div class="user-info owner">
+    <div class="user-action-time">created <span title="2015-01-13 14:53:39Z" class="relativetime">jan 13 15</span></div>
+        <div class="user-gravatar32">
+                <a href="/users/13444"><img src="//www.gravatar.com/avatar/32ef4e3e388cbadc756a008cade3ee6a?s=64&amp;d=identicon&amp;r=PG" height="32px" width="32px" class="logo"></a>
+                <a href="/users/13444">Janos</a>
+        </div>
+</div>
+
+    </td>
+    </tr>
+    </tbody>
+</table>
+
+<script type="text/javascript">
+    DataExplorer.ready(function () {
+        var formatOptions = {
+            'slug': '/naruto-accepted-answer-with-zero-score',
+            'params': window.location.search,
+            'id': 264586
+        };
+
+        DataExplorer.template('#site-selector a.templated', 'href', formatOptions);
+        DataExplorer.SiteSwitcher.update(formatOptions);
+
+        $('#site-selector').show();
+    });
+</script>
+        <div id="query-params">
+            <h3>Enter Parameters</h3>
+        </div>
+        <div id="query-options">
+            <button id="submit-query" class="btn-normal" type="submit">Run Query</button>
+            <button id="cancel-query" class="btn-normal" type="button" disabled>Cancel</button>
+            <span class="options">
+                Options:
+                <label title="Return results in text format"><input type="checkbox" name="textResults" value="true" />Text-only results</label>
+                <label title="Include the execution plan for this query in the results"><input type="checkbox" name="withExecutionPlan" value="true" />Include execution plan</label>
+                        </span>
+        </div>
+<div id="captcha" style="display:none;">
+    <h4>To avoid spam queries, all anonymous users must solve a captcha</h4>
+    <div>
+ 
+       <script type="text/javascript">
+		var RecaptchaOptions = {
+			theme : 'clean',
+			tabindex : 0
+		};
+
+</script><script type="text/javascript" src="http://www.google.com/recaptcha/api/challenge?k=6Le5RMESAAAAAC3mP6gGby1lVHSG3GM0fc0wrvES">
+
+</script><noscript>
+		<iframe src="http://www.google.com/recaptcha/api/noscript?k=6Le5RMESAAAAAC3mP6gGby1lVHSG3GM0fc0wrvES" width="500" height="300" frameborder="0">
+
+		</iframe><br /><textarea name="recaptcha_challenge_field" rows="3" cols="40"></textarea><input name="recaptcha_response_field" value="manual_challenge" type="hidden" />
+</noscript>
+    </div>
+    <div class="error-message">
+        <strong>Whoops!</strong> Looks like you didn't get the captcha quite right, please try again.
+    </div>
+    <button class="btn-normal" type="submit">I'm a Human Being!</button>
+</div>        <div class="clear"></div>
+    </form>
+    <div id="site-selector" class="result-option">
+        Switch sites:
+        <ul>
+            <li class="site-selector-related">
+                <a class="site templated related-site" href="/meta.codereview/query/:id:slug:params" title="View results on Code Review Meta">
+                    <img class="site-icon" src="http://sstatic.net/codereviewmeta/img/icon-16.png" alt="Code Review Meta" />
+                </a>
+            </li>
+            <li>
+                <input id="switch-sites" type="text" size="24" placeholder="search by name or url" />
+            </li>
+        </ul>
+        <div class="clear"></div>
+    </div>
+    <div id="loading">
+        <img src="//cdn.sstatic.net/img/progress-dots.gif" alt="loading" /> Hold tight while we fetch your results
+    </div>
+    <div id="error-message" class="error-message"></div>
+    <div id="query-results" class="result-option">
+        <div class="subheader">
+            <div class="group">
+                <div class="miniTabs">
+                    <a id="resultSetsTab" class="optional" href="#resultSets">Results<span class="tab-counter" title="Change result set">[:current/:total]</span></a>
+                    <a id="messagesTab" href="#messages">Messages</a>
+                    <a id="graphTab" class="optional" href="#graph">Graph</a>
+                    <a id="executionPlanTab" class="optional" href="#executionPlan">Execution Plan</a>
+                </div>
+                <a id="resultSetsButton" class="download-button templated" title="Download results as CSV" href="/:site/:targetsites;csv/:revisionid:params">Download CSV</a>
+                <a id="executionPlanButton" class="download-button templated" title="Download execution plan as XML" href="/:site/:targetsites;plan/:revisionid:params">Download XML</a>
+            </div>
+        </div>
+        <div id="resultSets" class="panel"></div>
+        <pre id="messages" class="panel"><code></code></pre>
+        <div id="executionPlan" class="panel"></div>
+        <div id="graph" class="panel"></div>
+        <div id="execution-stats">:records returned in :time ms:cached</div>
+    </div>
+</div>
+<script src="/assets/js/query?v=KCle9LYpTOg784y7ZudjZ8cBXUXCuzfZu8X1Zr4KuCk1"></script>
+
+<script type="text/javascript">
+    DataExplorer.ready(function () {
+        if (loadCachedResults) {
+            loadCachedResults();
+        }
+    });
+
+    DataExplorer.SiteSwitcher.init('#switch-sites', '/:site/query/:id:slug:params');
+</script>
+        
+    </div>
+    <div id="footer">
+        <div class="footerwrap">
+            <div id="footer-menu">
+                <a href="/about">help</a>
+                <a href="http://stackexchange.com/sites">sites</a>
+                <a href="http://blog.stackexchange.com">blog</a>
+                <a href="http://chat.stackexchange.com/rooms/13526/sede-stack-exchange-data-explorer">chat</a>
+                <a href="http://data.stackexchange.com">data</a>
+                <a href="http://stackexchange.com/legal">legal</a>
+                <strong><a href="http://meta.stackexchange.com/contact">contact us</a></strong>
+                <strong><a href="http://meta.stackexchange.com">feedback</a></strong>
+            </div>
+            <div id="copyright">
+                site design / logo &copy; 2015 Stack Exchange Inc; 
+                user contributions licensed under <a href="http://creativecommons.org/licenses/by-sa/3.0/" rel="license">cc by-sa 3.0</a>
+                with <a href="http://blog.stackoverflow.com/2009/06/attribution-required/" rel="license">attribution required</a>
+            </div>
+            <div id="revision">rev 2015.11.24.46</div>
+        </div>
+    </div>
+    <noscript>
+        <div id="noscript-warning">
+            Data Explorer works best with JavaScript enabled</div>
+    </noscript>
+    <script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-50203-8']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+</body>
+</html>
