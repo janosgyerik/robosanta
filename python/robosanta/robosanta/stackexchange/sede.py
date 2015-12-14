@@ -98,14 +98,14 @@ def fetch_table(label, url):
     :param url: the URL to download
     :return: a tuple of ({cols}, [rows])
     """
-    soup = fetch_soup(label, url)
+    soup = fetch_sede_soup(label, url)
     if not soup:
         return {}, []
 
     return extract_table(soup)
 
 
-def fetch_soup(label, url):
+def fetch_sede_soup(label, url):
     def is_valid(soup):
         for script in soup.findAll('script'):
             result_sets_col = 'resultSets'
