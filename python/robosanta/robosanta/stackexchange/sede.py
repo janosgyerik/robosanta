@@ -108,8 +108,7 @@ def fetch_table(label, url):
 def fetch_sede_soup(label, url):
     def is_valid(soup):
         for script in soup.findAll('script'):
-            result_sets_col = 'resultSets'
-            if result_sets_col in script.text:
+            if 'resultSets' in script.text:
                 return True
         return False
 
