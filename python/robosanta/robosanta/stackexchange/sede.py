@@ -130,10 +130,10 @@ def fetch_sede_soup(label, url):
         logging.info('updating cache')
         write_cache(cache_path, html)
         return soup
+    else:
+        logging.warning('result not valid')
+        write_cache(debug_cache_path, html)
 
-    write_cache(debug_cache_path, html)
-
-    logging.warning('result not valid')
     if os.path.exists(cache_path):
         logging.info('using previous cache')
         with open(cache_path) as fh:
