@@ -106,11 +106,8 @@ def fetch_table(label, url):
 
 
 def fetch_sede_soup(label, url):
-    def is_valid(soup):
-        for script in soup.findAll('script'):
-            if 'resultSets' in script.text:
-                return True
-        return False
+    cache_path = os.path.join(CACHE_DIR, '{}.html'.format(label))
+    debug_cache_path = os.path.join(CACHE_DIR, '{}-debug.html'.format(label))
 
     if not os.path.isdir(CACHE_DIR):
         os.mkdir(CACHE_DIR)
@@ -119,8 +116,11 @@ def fetch_sede_soup(label, url):
     html = requests.get(url).text
     soup = BeautifulSoup(html)
 
-    cache_path = os.path.join(CACHE_DIR, '{}.html'.format(label))
-    debug_cache_path = os.path.join(CACHE_DIR, '{}-debug.html'.format(label))
+    def is_valid(soup):
+        for script in soup.findAll('script'):
+            if 'resultSets' in script.text:
+                return True
+        return False
 
     if is_valid(soup):
         logging.info('updating cache')
