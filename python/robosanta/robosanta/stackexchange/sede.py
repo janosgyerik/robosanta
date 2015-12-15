@@ -122,14 +122,16 @@ def fetch_sede_soup(label, url):
                 return True
         return False
 
+    def write_cache(path, html):
+        with open(path, 'w') as fh:
+            fh.write(html)
+
     if is_valid(soup):
         logging.info('updating cache')
-        with open(cache_path, 'w') as fh:
-            fh.write(html)
+        write_cache(cache_path, html)
         return soup
 
-    with open(debug_cache_path, 'w') as fh:
-        fh.write(html)
+    write_cache(debug_cache_path, html)
 
     logging.warning('result not valid')
     if os.path.exists(cache_path):
