@@ -138,3 +138,6 @@ def fetch_sede_soup(label, url):
         logging.info('using previous cache')
         with open(cache_path) as fh:
             return BeautifulSoup(fh)
+    else:
+        logging.error('no previous cache: you must download the page manually')
+        return BeautifulSoup()
