@@ -3,6 +3,5 @@
 export LD_LIBRARY_PATH=~/usr/local/lib
 
 cd $(dirname "$0")
-./run.sh robosanta.py -q chat -r 26245 sending-naruto
-./run.sh robosanta.py -q naruto -r 8595
-#./run.sh robosanta.py -q naruto -r 26245
+
+./run.sh robosanta.py --naruto -r 26245,8595
