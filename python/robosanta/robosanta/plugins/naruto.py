@@ -1,8 +1,7 @@
 import logging
-import random
 
 import settings
-from robosanta.stackexchange import sede
+from robosanta.plugins.pickers import PostPicker
 from stackexchange import CodeReview
 
 ''' TODO : better separation of concerns
@@ -45,34 +44,41 @@ NARUTO_URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accep
 NARUTO_INTRO_MESSAGE = 'Accepted non-selfie answer with 0 score:'
 
 
-def pick_naruto_message():
-    cols, rows = sede.fetch_table('naruto', NARUTO_URL)
+class NarutoPicker(PostPicker):
 
-    answer_id_index = cols['Post Link']['index']
-    answer_ids = [row[answer_id_index]['id'] for row in rows]
+    def __init__(self):
+        super().__init__()
+        self.cr = CodeReview()
 
-    random.shuffle(answer_ids)
+    @property
+    def name(self):
+        return 'naruto'
 
-    cr = CodeReview()
-    for answer_id in answer_ids:
-        logging.info('fetching answer {}'.format(answer_id))
+    @property
+    def url(self):
+        return NARUTO_URL
+
+    def accept(self, post_id):
+        reject = (None, False)
+
+        logging.info('fetching answer {}'.format(post_id))
         try:
-            answer = cr.answer(answer_id)
+            answer = self.cr.answer(post_id)
         except ValueError as e:
             logging.error('error when fetching answer: '.format(e))
-            continue
+            return reject
 
         if answer.owner_id in settings.EXCLUDED_OWNERS:
             logging.info('owner excluded, skip: {}'.format(answer.url))
-            continue
+            return reject
 
-        question = cr.question(answer.question_id)
+        question = self.cr.question(answer.question_id)
         if 'closed_date' in question.json:
             logging.warning('question closed, skip: {}'.format(answer.url))
-            continue
+            return reject
 
         if answer.score != 0:
             logging.warning('score not zero, skip: {}'.format(answer.url))
-            continue
+            return reject
 
-        return [NARUTO_INTRO_MESSAGE, answer.url]
+        return [NARUTO_INTRO_MESSAGE, answer.url], True

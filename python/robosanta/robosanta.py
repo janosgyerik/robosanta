@@ -4,7 +4,7 @@ import logging
 from argparse import ArgumentParser
 
 import settings
-from robosanta.plugins.naruto import pick_naruto_message
+from robosanta.plugins.naruto import NarutoPicker
 from robosanta.stackexchange.chat.client import Client
 
 
@@ -37,7 +37,7 @@ def parse_args():
     if args.message:
         messages = [args.message]
     elif args.naruto:
-        messages = pick_naruto_message()
+        messages = NarutoPicker().pick()
     else:
         return
 
