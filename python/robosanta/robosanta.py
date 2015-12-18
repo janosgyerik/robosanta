@@ -5,6 +5,7 @@ from argparse import ArgumentParser
 
 import settings
 from robosanta.plugins.naruto import NarutoPicker
+from robosanta.plugins.ripe_zombie import RipeZombiePicker
 from robosanta.stackexchange.chat.client import Client
 
 
@@ -23,6 +24,7 @@ def parse_args():
     parser.add_argument('-q', '--quiet', action='store_true')
     parser.add_argument('-r', '--rooms', metavar='ROOMS', default=str(settings.ROOM_ID))
     parser.add_argument('--naruto', action='store_true', help='Post a Naruto answer')
+    parser.add_argument('--ripe-zombie', action='store_true', help='Post a ripe zombie')
     parser.add_argument('-m', '--message', help='Post a message in a chat room')
 
     args = parser.parse_args()
@@ -38,6 +40,8 @@ def parse_args():
         messages = [args.message]
     elif args.naruto:
         messages = NarutoPicker().pick()
+    elif args.ripe_zombie:
+        messages = RipeZombiePicker().pick()
     else:
         return
 
