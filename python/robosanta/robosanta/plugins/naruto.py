@@ -4,39 +4,13 @@ import settings
 from robosanta.plugins.pickers import PostPicker
 from stackexchange import CodeReview
 
-''' TODO : better separation of concerns
-message provider
-  message = optional intro + link
-
-sede message provider
-  pick a line, extracting columns from sede + shuffle + filtering
-
-naruto message provider
-  compose from sede message provider
-  custom intro message
-  sede configuration
-    sede url
-    column to pick
+''' TODO
   filter logic:
     fetch answer
     +reject if author is in exclusion list
     reject if answer author is same as question author
     reject if question is closed
     +reject if answer score is not 0
-    accept
-
-forgotten zombie message provider
-  compose from sede message provider
-  custom intro message
-  sede configuration
-    sede url
-    column to pick
-  filter logic:
-    fetch question
-    reject if closed
-    reject if accepted
-    reject if any answer has score > 0
-    reject if no answer has score == 0
     accept
 '''
 
