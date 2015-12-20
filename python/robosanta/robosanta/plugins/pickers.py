@@ -35,7 +35,7 @@ class PostPicker:
         Tests whether or not the specified post id should be included in a list.
 
         :param post_id: the post id to be tested
-        :return: (post, accept), where accept = if and only if the post should be included
+        :return: messages to send, or falsy to reject
         """
         raise NotImplementedError
 
@@ -48,8 +48,8 @@ class PostPicker:
         random.shuffle(post_ids)
 
         for post_id in post_ids:
-            post, accept = self.accept(post_id)
-            if accept:
+            post = self.accept(post_id)
+            if post:
                 return post
 
         return None

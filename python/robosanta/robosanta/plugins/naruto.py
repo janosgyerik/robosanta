@@ -33,26 +33,24 @@ class NarutoPicker(PostPicker):
         return NARUTO_URL
 
     def accept(self, post_id):
-        reject = (None, False)
-
         logging.info('fetching answer {}'.format(post_id))
         try:
             answer = self.cr.answer(post_id)
         except ValueError as e:
             logging.error('error when fetching answer: '.format(e))
-            return reject
+            return None
 
         if answer.owner_id in settings.EXCLUDED_OWNERS:
             logging.info('owner excluded, skip: {}'.format(answer.url))
-            return reject
+            return None
 
         question = self.cr.question(answer.question_id)
         if 'closed_date' in question.json:
             logging.warning('question closed, skip: {}'.format(answer.url))
-            return reject
+            return None
 
         if answer.score != 0:
             logging.warning('score not zero, skip: {}'.format(answer.url))
-            return reject
+            return None
 
-        return [NARUTO_INTRO_MESSAGE, answer.url], True
+        return [NARUTO_INTRO_MESSAGE, answer.url]

@@ -26,39 +26,36 @@ class RipeZombiePicker(PostPicker):
         memo: deleted answers are excluded by Stack API
         memo: deleted questions are excluded by Stack API
 
-        :param post_id: post id in the query
-        :return: tuple of (post url, accept/reject)
+        :param post_id: is of a question
+        :return: messages to send, or falsy to reject
         """
-
-        reject = (None, False)
-
         logging.info('fetching question {}'.format(post_id))
         try:
             question = self.cr.question(post_id)
         except ValueError as e:
             logging.error('error when fetching question: '.format(e))
-            return reject
+            return None
 
         if 'closed_date' in question.json:
             logging.warning('question closed, skip: {}'.format(question.url))
-            return reject
+            return None
 
         score_0_exists = False
 
         for answer in question.answers:
             if answer.score > 0:
                 logging.warning('answer with postitive score exists, skip: {}'.format(answer.url))
-                return reject
+                return None
 
             if answer.is_accepted:
                 logging.warning('accepted answer exists, skip: {}'.format(answer.url))
-                return reject
+                return None
 
             if answer.score == 0:
                 score_0_exists = True
 
         if not score_0_exists:
             logging.warning('no answer with 0 score, skip: {}'.format(question.url))
-            return reject
+            return None
 
-        return [INTRO_MESSAGE, question.url], True
+        return [INTRO_MESSAGE, question.url]
