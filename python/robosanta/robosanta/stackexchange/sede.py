@@ -9,90 +9,6 @@ BASE_DIR = os.path.dirname(__file__)
 CACHE_DIR = os.path.join(BASE_DIR, '.cache')
 
 
-def extract_column(soup, colname):
-    """
-    Returns a generator of cell values in selected column.
-
-    For simple columns like timestamp, a cell value can be simple,
-    for example: 1414433013197
-
-    For more complex columns like Post Link, a cell value can be an object,
-    for example:
-
-      {
-        "id": 68102,
-        "title": "Bash Script - File Comment out & Notate"
-      }
-
-    :param soup: a bs4 (BeautifulSoup) object
-    :param colname: name of the SEDE column to extract
-    :return: generator of cell values in selected column
-    """
-
-    cols, rows = extract_table(soup)
-
-    if colname not in cols:
-        return
-
-    index = cols[colname]['index']
-
-    for row in rows:
-        yield row[index]
-
-
-def transform_columns_meta(se_columns_meta):
-    columns_meta = {}
-
-    for index, se_col_meta in enumerate(se_columns_meta):
-        col_meta = {'index': index}
-        col_meta.update(se_col_meta)
-        columns_meta[se_col_meta['name']] = col_meta
-
-    return columns_meta
-
-
-def extract_table(soup):
-    for script in soup.findAll('script'):
-        result_sets_col = 'resultSets'
-        if result_sets_col in script.text:
-            start = script.text.rindex('{', 0, script.text.index(result_sets_col))
-            end = script.text.index('}', script.text.index('querySetId')) + 1
-            data = json.loads(script.text[start:end])
-
-            results = data[result_sets_col][0]
-            columns = transform_columns_meta(results['columns'])
-            rows = results['rows']
-
-            return columns, rows
-
-    return {}, []
-
-
-def fetch_table(label, url):
-    """
-    Fetch a URL using `fetch_soup` and extract a table as a tuple of {cols} and [rows].
-    {cols} is a mapping of column names to column meta data, see more details below.
-    [rows] is a list of rows in the table.
-
-    Example values of {cols}:
-        {
-            'name': {
-                'index': 0,
-                'type': 'User',
-            }
-        }
-
-    :param label: a simple name to represent the URL, it will be used as the cache filename
-    :param url: the URL to download
-    :return: a tuple of ({cols}, [rows])
-    """
-    soup = fetch_sede_soup(label, url)
-    if not soup:
-        return {}, []
-
-    return extract_table(soup)
-
-
 def fetch_sede_soup(label, url):
     cache_path = os.path.join(CACHE_DIR, '{}.html'.format(label))
     debug_cache_path = os.path.join(CACHE_DIR, '{}-debug.html'.format(label))
@@ -129,3 +45,87 @@ def fetch_sede_soup(label, url):
     else:
         logging.error('no previous cache: you must download the page manually')
         return BeautifulSoup()
+
+
+def fetch_table(label, url):
+    """
+    Fetch a URL using `fetch_soup` and extract a table as a tuple of {cols} and [rows].
+    {cols} is a mapping of column names to column meta data, see more details below.
+    [rows] is a list of rows in the table.
+
+    Example values of {cols}:
+        {
+            'name': {
+                'index': 0,
+                'type': 'User',
+            }
+        }
+
+    :param label: a simple name to represent the URL, it will be used as the cache filename
+    :param url: the URL to download
+    :return: a tuple of ({cols}, [rows])
+    """
+    soup = fetch_sede_soup(label, url)
+    if not soup:
+        return {}, []
+
+    return extract_table(soup)
+
+
+def transform_columns_meta(se_columns_meta):
+    columns_meta = {}
+
+    for index, se_col_meta in enumerate(se_columns_meta):
+        col_meta = {'index': index}
+        col_meta.update(se_col_meta)
+        columns_meta[se_col_meta['name']] = col_meta
+
+    return columns_meta
+
+
+def extract_table(soup):
+    for script in soup.findAll('script'):
+        result_sets_col = 'resultSets'
+        if result_sets_col in script.text:
+            start = script.text.rindex('{', 0, script.text.index(result_sets_col))
+            end = script.text.index('}', script.text.index('querySetId')) + 1
+            data = json.loads(script.text[start:end])
+
+            results = data[result_sets_col][0]
+            columns = transform_columns_meta(results['columns'])
+            rows = results['rows']
+
+            return columns, rows
+
+    return {}, []
+
+
+def extract_column(soup, colname):
+    """
+    Returns a generator of cell values in selected column.
+
+    For simple columns like timestamp, a cell value can be simple,
+    for example: 1414433013197
+
+    For more complex columns like Post Link, a cell value can be an object,
+    for example:
+
+      {
+        "id": 68102,
+        "title": "Bash Script - File Comment out & Notate"
+      }
+
+    :param soup: a bs4 (BeautifulSoup) object
+    :param colname: name of the SEDE column to extract
+    :return: generator of cell values in selected column
+    """
+
+    cols, rows = extract_table(soup)
+
+    if colname not in cols:
+        return
+
+    index = cols[colname]['index']
+
+    for row in rows:
+        yield row[index]
