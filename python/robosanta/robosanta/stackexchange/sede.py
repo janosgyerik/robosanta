@@ -29,27 +29,15 @@ def extract_column(soup, colname):
     :return: generator of cell values in selected column
     """
 
-    def get_column_index():
-        for index, info in enumerate(columns):
-            if info['name'] == colname:
-                return index
-        return -1
+    cols, rows = extract_table(soup)
 
-    for script in soup.findAll('script'):
-        result_sets_col = 'resultSets'
-        if result_sets_col in script.text:
-            start = script.text.rindex('{', 0, script.text.index(result_sets_col))
-            end = script.text.index('}', script.text.index('querySetId')) + 1
-            data = json.loads(script.text[start:end])
+    if colname not in cols:
+        return
 
-            results = data[result_sets_col][0]
-            columns = results['columns']
-            rows = results['rows']
+    index = cols[colname]['index']
 
-            column_index = get_column_index()
-            if column_index > -1:
-                for row in rows:
-                    yield row[column_index]
+    for row in rows:
+        yield row[index]
 
 
 def transform_columns_meta(se_columns_meta):
