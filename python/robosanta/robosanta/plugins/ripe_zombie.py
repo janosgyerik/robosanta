@@ -3,7 +3,7 @@ import logging
 from robosanta.plugins.pickers import PostPicker
 from stackexchange import CodeReview
 
-RIPE_ZOMBIE_URL = 'http://data.stackexchange.com/codereview/query/412155/ripe-zombies'
+URL = 'http://data.stackexchange.com/codereview/query/412155/ripe-zombies'
 INTRO_MESSAGE = 'TODO:'
 
 
@@ -19,7 +19,7 @@ class RipeZombiePicker(PostPicker):
 
     @property
     def url(self):
-        return RIPE_ZOMBIE_URL
+        return URL
 
     def accept(self, post_id):
         """

@@ -14,8 +14,8 @@ from stackexchange import CodeReview
     accept
 '''
 
-NARUTO_URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score'
-NARUTO_INTRO_MESSAGE = 'Accepted non-selfie answer with 0 score:'
+URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score'
+INTRO_MESSAGE = 'Accepted non-selfie answer with 0 score:'
 
 
 class NarutoPicker(PostPicker):
@@ -30,7 +30,7 @@ class NarutoPicker(PostPicker):
 
     @property
     def url(self):
-        return NARUTO_URL
+        return URL
 
     def accept(self, post_id):
         logging.info('fetching answer {}'.format(post_id))
@@ -53,4 +53,4 @@ class NarutoPicker(PostPicker):
             logging.warning('score not zero, skip: {}'.format(answer.url))
             return None
 
-        return [NARUTO_INTRO_MESSAGE, answer.url]
+        return [INTRO_MESSAGE, answer.url]
