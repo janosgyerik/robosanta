@@ -15,7 +15,7 @@ from stackexchange import CodeReview
 '''
 
 URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score'
-INTRO_MESSAGE = 'Accepted non-selfie answer with 0 score:'
+INTRO_MESSAGE = 'Naruto answer; accepted non-selfie answer with 0 score:'
 
 
 class NarutoPicker(PostPicker):
