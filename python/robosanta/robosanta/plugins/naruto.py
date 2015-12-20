@@ -4,16 +4,6 @@ import settings
 from robosanta.plugins.pickers import PostPicker
 from stackexchange import CodeReview
 
-''' TODO
-  filter logic:
-    fetch answer
-    +reject if author is in exclusion list
-    reject if answer author is same as question author
-    reject if question is closed
-    +reject if answer score is not 0
-    accept
-'''
-
 URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score'
 INTRO_MESSAGE = 'Naruto answer; accepted non-selfie answer with 0 score:'
 
@@ -33,6 +23,13 @@ class NarutoPicker(PostPicker):
         return URL
 
     def accept(self, post_id):
+        """
+        memo: deleted answers are excluded by Stack API
+        memo: deleted questions are excluded by Stack API
+
+        :param post_id: is of a question
+        :return: messages to send, or falsy to reject
+        """
         logging.info('fetching answer {}'.format(post_id))
         try:
             answer = self.cr.answer(post_id)
@@ -45,8 +42,13 @@ class NarutoPicker(PostPicker):
             return None
 
         question = self.cr.question(answer.question_id)
+
         if 'closed_date' in question.json:
             logging.warning('question closed, skip: {}'.format(answer.url))
+            return None
+
+        if question.owner_id == answer.owner_id:
+            logging.warning('answer owner is the same as question owner, skip: {}'.format(answer.url))
             return None
 
         if answer.score != 0:
