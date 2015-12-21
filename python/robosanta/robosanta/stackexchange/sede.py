@@ -10,6 +10,18 @@ CACHE_DIR = os.path.join(BASE_DIR, '.cache')
 
 
 def fetch_sede_soup(label, url):
+    """
+    Download the result page of a SEDE query and create a BeautifulSoup from it.
+    If the page contains results, cache it in a file.
+    If the page doesn't contain results, use the cache instead.
+    Note: this happens when the SEDE query is not executed in the browser
+    for a few days.
+
+    :param label: a simple name to represent the URL, it will be used as the cache filename
+    :param url: the URL to download
+    :return: a BeautifulSoup instance from the URL
+    """
+
     cache_path = os.path.join(CACHE_DIR, '{}.html'.format(label))
     debug_cache_path = os.path.join(CACHE_DIR, '{}-debug.html'.format(label))
 
@@ -102,7 +114,7 @@ def extract_table(soup):
 
 def extract_column(soup, colname):
     """
-    Returns a generator of cell values in selected column.
+    Return a generator of cell values in selected column.
 
     For simple columns like timestamp, a cell value can be simple,
     for example: 1414433013197
