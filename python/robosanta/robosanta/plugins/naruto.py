@@ -1,6 +1,5 @@
 import logging
 
-import settings
 from robosanta.plugins.pickers import PostPicker
 from stackexchange import CodeReview
 
@@ -35,10 +34,6 @@ class NarutoPicker(PostPicker):
             answer = self.cr.answer(post_id)
         except ValueError as e:
             logging.error('error when fetching answer: '.format(e))
-            return None
-
-        if answer.owner_id in settings.EXCLUDED_OWNERS:
-            logging.info('owner excluded, skip: {}'.format(answer.url))
             return None
 
         question = self.cr.question(answer.question_id)
