@@ -40,6 +40,12 @@ class PostPicker:
         raise NotImplementedError
 
     def pick(self):
+        """
+        Select a random post from a list of post ids extracted from the URL.
+        Iterate over the post ids until self.accept returns truthy.
+
+        :return: a list of messages to post
+        """
         cols, rows = sede.fetch_table(self.name, self.url)
 
         answer_id_index = cols['Post Link']['index']
