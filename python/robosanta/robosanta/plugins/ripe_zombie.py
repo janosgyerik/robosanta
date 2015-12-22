@@ -27,7 +27,7 @@ class RipeZombiePicker(PostPicker):
         memo: deleted answers are excluded by Stack API
         memo: deleted questions are excluded by Stack API
 
-        :param post_id: is of a question
+        :param post_id: id of a question
         :return: messages to send, or falsy to reject
         """
         logging.info('fetching question {}'.format(post_id))
