@@ -49,6 +49,10 @@ def parse_args():
     else:
         return
 
+    if not messages:
+        logging.info('no suitable messages found, exit')
+        return
+
     for room_id in rooms:
         for message in messages:
             if not args.dry_run:
