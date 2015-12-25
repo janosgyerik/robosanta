@@ -85,6 +85,22 @@ def fetch_table(label, url):
 
 
 def transform_columns_meta(se_columns_meta):
+    """
+    Transform SE column meta data, for example,
+    from:
+        [
+            {'name': 'User Link', 'type': 'User'},
+            {'name': 'Post Link', 'type': 'Post'}
+        ]
+    to:
+        {
+            'User Link': {'name': 'User Link', 'type': 'User', 'index': 0},
+            'Post Link': {'name': 'Post Link', 'type': 'Post', 'index': 1}
+        }
+
+    :param se_columns_meta: list of dictionaries describing the fields
+    :return: dictionary of dictionaries, with index added
+    """
     columns_meta = {}
 
     for index, se_col_meta in enumerate(se_columns_meta):
