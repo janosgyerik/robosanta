@@ -112,6 +112,14 @@ def transform_columns_meta(se_columns_meta):
 
 
 def extract_table(soup):
+    """
+    Return a tuple of:
+    - meta data of columns as a dictionary
+    - list of rows
+
+    :param soup: a bs4 (BeautifulSoup) object
+    :return: a tuple of ({cols}, [rows])
+    """
     for script in soup.findAll('script'):
         result_sets_col = 'resultSets'
         if result_sets_col in script.text:
