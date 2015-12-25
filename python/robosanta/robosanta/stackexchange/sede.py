@@ -62,16 +62,9 @@ def fetch_sede_soup(label, url):
 def fetch_table(label, url):
     """
     Fetch a URL using `fetch_soup` and extract a table as a tuple of {cols} and [rows].
-    {cols} is a mapping of column names to column meta data, see more details below.
-    [rows] is a list of rows in the table.
 
-    Example values of {cols}:
-        {
-            'name': {
-                'index': 0,
-                'type': 'User',
-            }
-        }
+    - {cols} is a mapping of column names to column meta data
+    - [rows] is a list of rows in the table
 
     :param label: a simple name to represent the URL, it will be used as the cache filename
     :param url: the URL to download
