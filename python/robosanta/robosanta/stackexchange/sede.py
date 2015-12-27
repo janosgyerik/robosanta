@@ -10,6 +10,20 @@ CACHE_DIR = os.path.join(BASE_DIR, '.cache')
 
 
 class Table:
+    """
+    Represent the results of a SEDE query.
+
+    For simple columns like timestamp, a cell value can be simple,
+    for example: 1414433013197
+
+    For more complex columns like Post Link, a cell value can be an object,
+    for example:
+
+      {
+        "id": 68102,
+        "title": "Bash Script - File Comment out & Notate"
+      }
+    """
 
     def __init__(self, columns=None, rows=None):
         """
@@ -29,6 +43,11 @@ class Table:
 
     @property
     def colnames(self):
+        """
+        Get list of column names
+
+        :return: list of column names
+        """
         return self._colnames
 
     def column(self, name):
@@ -166,31 +185,3 @@ def extract_table(soup):
             return Table(columns, rows)
 
     return Table()
-
-
-def extract_column(soup, colname):
-    """
-    Return a generator of cell values in selected column.
-
-    For simple columns like timestamp, a cell value can be simple,
-    for example: 1414433013197
-
-    For more complex columns like Post Link, a cell value can be an object,
-    for example:
-
-      {
-        "id": 68102,
-        "title": "Bash Script - File Comment out & Notate"
-      }
-
-    :param soup: a bs4 (BeautifulSoup) object
-    :param colname: name of the SEDE column to extract
-    :return: generator of cell values in selected column
-    """
-
-    table = extract_table(soup)
-
-    if colname not in table.colnames:
-        return []
-
-    return table.column(colname)

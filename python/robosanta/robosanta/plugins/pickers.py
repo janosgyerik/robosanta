@@ -47,8 +47,7 @@ class PostPicker:
         :return: a list of messages to post
         """
         soup = sede.fetch_sede_soup(self.name, self.url)
-        post_links = sede.extract_column(soup, 'Post Link')
-        post_ids = [post_link['id'] for post_link in post_links]
+        post_ids = sede.extract_table(soup).post_ids()
 
         random.shuffle(post_ids)
 

@@ -2,7 +2,7 @@ import os
 import unittest
 
 from bs4 import BeautifulSoup
-from robosanta.stackexchange.sede import extract_column, extract_table
+from robosanta.stackexchange.sede import extract_table
 
 BASE_DIR = os.path.dirname(__file__)
 
@@ -23,7 +23,7 @@ def new_table():
 
 class TestGetColumn(unittest.TestCase):
     def extract_column(self, colname):
-        return extract_column(new_soup(), colname)
+        return extract_table(new_soup()).column(colname)
 
     def extract_post_link(self):
         return self.extract_column(POST_ID_COLUMN)
@@ -48,7 +48,8 @@ class TestGetColumn(unittest.TestCase):
         self.assertEqual(1338304381360, self.extract_date()[0])
 
     def test_nonexistent_column(self):
-        self.assertEqual(0, len(self.extract_column('nonexistent')))
+        with self.assertRaises(KeyError):
+            self.extract_column('nonexistent')
 
 
 class TestTable(unittest.TestCase):
