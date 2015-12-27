@@ -9,6 +9,47 @@ BASE_DIR = os.path.dirname(__file__)
 CACHE_DIR = os.path.join(BASE_DIR, '.cache')
 
 
+class Table:
+
+    def __init__(self, columns=None, rows=None):
+        """
+        Create a Table from columns meta data and rows.
+
+        :param columns: meta data of columns as a dict
+        :param rows: rows of the table as list of dict
+        :return: new Table instance
+        """
+        if not columns:
+            columns = {}
+        if not rows:
+            rows = []
+        self._columns = columns
+        self._rows = rows
+        self._colnames = set(columns.keys())
+
+    @property
+    def colnames(self):
+        return self._colnames
+
+    def column(self, name):
+        """
+        Get column, by iterating over rows and extracting specified column.
+
+        :param name: name of the column to extract
+        :return: content of the column as a list
+        """
+        index = self._columns[name]['index']
+        return [row[index] for row in self._rows]
+
+    def post_ids(self):
+        """
+        Convenience method to extract the ids from a Post Link column.
+
+        :return: list of post ids
+        """
+        return [post_link['id'] for post_link in self.column('Post Link')]
+
+
 def fetch_sede_soup(label, url):
     """
     Download the result page of a SEDE query and create a BeautifulSoup from it.
@@ -106,12 +147,10 @@ def transform_columns_meta(se_columns_meta):
 
 def extract_table(soup):
     """
-    Return a tuple of:
-    - meta data of columns as a dictionary
-    - list of rows
+    Return a Table representing the SEDE results
 
     :param soup: a bs4 (BeautifulSoup) object
-    :return: a tuple of ({cols}, [rows])
+    :return: a Table object
     """
     for script in soup.findAll('script'):
         result_sets_col = 'resultSets'
@@ -124,9 +163,9 @@ def extract_table(soup):
             columns = transform_columns_meta(results['columns'])
             rows = results['rows']
 
-            return columns, rows
+            return Table(columns, rows)
 
-    return {}, []
+    return Table()
 
 
 def extract_column(soup, colname):
@@ -149,12 +188,9 @@ def extract_column(soup, colname):
     :return: generator of cell values in selected column
     """
 
-    cols, rows = extract_table(soup)
+    table = extract_table(soup)
 
-    if colname not in cols:
-        return
+    if colname not in table.colnames:
+        return []
 
-    index = cols[colname]['index']
-
-    for row in rows:
-        yield row[index]
+    return table.column(colname)
