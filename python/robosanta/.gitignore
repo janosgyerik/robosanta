@@ -61,8 +61,9 @@ target/
 .idea/
 
 # project
-virtualenv/
-db.sqlite3
+/virtualenv/
+/db.sqlite3
+/cron.sh
 
 # local config
 /settings.py
