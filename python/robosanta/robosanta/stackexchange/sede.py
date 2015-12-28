@@ -131,10 +131,10 @@ def fetch_table(label, url):
     :return: a tuple of ({cols}, [rows])
     """
     soup = fetch_sede_soup(label, url)
-    if not soup:
-        return {}, []
+    if soup:
+        return extract_table(soup)
 
-    return extract_table(soup)
+    return Table()
 
 
 def transform_columns_meta(se_columns_meta):
