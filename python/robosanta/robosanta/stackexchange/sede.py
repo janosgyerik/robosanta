@@ -134,7 +134,7 @@ def fetch_table(label, url):
     return extract_table(soup)
 
 
-def transform_columns_meta(se_columns_meta):
+def _transform_columns_meta(se_columns_meta):
     """
     Transform SE column meta data, for example,
     from:
@@ -176,7 +176,7 @@ def extract_table(soup):
             data = json.loads(script.text[start:end])
 
             results = data[result_sets_col][0]
-            columns = transform_columns_meta(results['columns'])
+            columns = _transform_columns_meta(results['columns'])
             rows = results['rows']
 
             return Table(columns, rows)
