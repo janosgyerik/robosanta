@@ -46,14 +46,14 @@ class PostPicker:
 
         :return: a list of messages to post
         """
-        soup = sede.fetch_sede_soup(self.name, self.url)
-        post_ids = sede.extract_table(soup).post_ids()
+        table = sede.fetch_table(self.name, self.url)
+        if table:
+            post_ids = table.post_ids()
+            random.shuffle(post_ids)
 
-        random.shuffle(post_ids)
-
-        for post_id in post_ids:
-            post = self.accept(post_id)
-            if post:
-                return post
+            for post_id in post_ids:
+                post = self.accept(post_id)
+                if post:
+                    return post
 
         return None
