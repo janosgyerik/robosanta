@@ -131,7 +131,7 @@ def fetch_table(label, url):
     if not soup:
         return None
 
-    return extract_table(soup)
+    return _extract_table(soup)
 
 
 def _transform_columns_meta(se_columns_meta):
@@ -161,7 +161,7 @@ def _transform_columns_meta(se_columns_meta):
     return columns_meta
 
 
-def extract_table(soup):
+def _extract_table(soup):
     """
     Return a Table representing the SEDE results
 

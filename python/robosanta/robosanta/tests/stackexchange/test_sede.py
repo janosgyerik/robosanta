@@ -2,7 +2,7 @@ import os
 import unittest
 
 from bs4 import BeautifulSoup
-from robosanta.stackexchange.sede import extract_table
+from robosanta.stackexchange.sede import _extract_table
 
 BASE_DIR = os.path.dirname(__file__)
 
@@ -18,12 +18,12 @@ def new_soup():
 
 
 def new_table():
-    return extract_table(new_soup())
+    return _extract_table(new_soup())
 
 
 class TestGetColumn(unittest.TestCase):
     def extract_column(self, colname):
-        return extract_table(new_soup()).column(colname)
+        return _extract_table(new_soup()).column(colname)
 
     def extract_post_link(self):
         return self.extract_column(POST_ID_COLUMN)
