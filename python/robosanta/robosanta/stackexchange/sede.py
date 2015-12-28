@@ -69,7 +69,7 @@ class Table:
         return [post_link['id'] for post_link in self.column('Post Link')]
 
 
-def fetch_sede_soup(label, url):
+def _fetch_sede_soup(label, url):
     """
     Download the result page of a SEDE query and create a BeautifulSoup from it.
     If the page contains results, cache it in a file.
@@ -127,7 +127,7 @@ def fetch_table(label, url):
     :param url: the URL to download
     :return: the Table representing the SEDE results, or None if fetch failed
     """
-    soup = fetch_sede_soup(label, url)
+    soup = _fetch_sede_soup(label, url)
     if not soup:
         return None
 
