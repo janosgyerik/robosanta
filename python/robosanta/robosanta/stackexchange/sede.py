@@ -69,6 +69,21 @@ class Table:
         return [post_link['id'] for post_link in self.column('Post Link')]
 
 
+def fetch_table(label, url):
+    """
+    Fetch a URL using `fetch_soup` and extract to a Table.
+
+    :param label: a simple name to represent the URL, it will be used as the cache filename
+    :param url: the URL to download
+    :return: the Table representing the SEDE results, or None if fetch failed
+    """
+    soup = _fetch_sede_soup(label, url)
+    if not soup:
+        return None
+
+    return _extract_table(soup)
+
+
 def _fetch_sede_soup(label, url):
     """
     Download the result page of a SEDE query and create a BeautifulSoup from it.
@@ -117,21 +132,6 @@ def _fetch_sede_soup(label, url):
     else:
         logging.error('no previous cache: you must download the page manually')
         return BeautifulSoup()
-
-
-def fetch_table(label, url):
-    """
-    Fetch a URL using `fetch_soup` and extract to a Table.
-
-    :param label: a simple name to represent the URL, it will be used as the cache filename
-    :param url: the URL to download
-    :return: the Table representing the SEDE results, or None if fetch failed
-    """
-    soup = _fetch_sede_soup(label, url)
-    if not soup:
-        return None
-
-    return _extract_table(soup)
 
 
 def _transform_columns_meta(se_columns_meta):
