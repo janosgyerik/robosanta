@@ -181,4 +181,4 @@ def _extract_table(soup):
 
             return Table(columns, rows)
 
-    return Table()
+    return None
