@@ -1,6 +1,7 @@
 import json
 import logging
 import os
+import re
 
 import requests
 from bs4 import BeautifulSoup
@@ -132,6 +133,38 @@ def _fetch_sede_soup(label, url):
     else:
         logging.error('no previous cache: you must download the page manually')
         return None
+
+
+def _url_to_slug(url):
+    """
+    Convert a URL to a slug, if possible, the last readable path segment.
+
+    >>> _url_to_slug('http://data.stackexchange.com/codereview/query/412155/ripe-zombies')
+    'ripe-zombies'
+
+    >>> _url_to_slug('http://data.stackexchange.com/codereview/query/412155/ripe-zombies/')
+    'ripe-zombies'
+
+    >>> _url_to_slug('http://data.stackexchange.com/codereview/query/412155/ripe-zo?>m^&bies/')
+    'ripe-zombies'
+
+    >>> _url_to_slug('')
+    'cache'
+
+    >>> _url_to_slug('#$%^')
+    'cache'
+
+    :param url: the URL of a SEDE query
+    :return: a slug extracted from the URL
+    """
+    try:
+        slug = re.sub(r'[^a-z-]', '', re.search(r'([^/]+)/*$', url).group(1))
+        if slug:
+            return slug
+    except AttributeError:
+        pass
+
+    return 'cache'
 
 
 def _transform_columns_meta(se_columns_meta):
