@@ -4,4 +4,4 @@ export LD_LIBRARY_PATH=~/usr/local/lib
 
 cd $(dirname "$0")
 
-./run.sh robosanta.py --naruto -r 26245,8595
+./run.sh robosanta.py "$@"
