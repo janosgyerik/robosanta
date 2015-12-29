@@ -131,7 +131,7 @@ def _fetch_sede_soup(label, url):
             return BeautifulSoup(fh)
     else:
         logging.error('no previous cache: you must download the page manually')
-        return BeautifulSoup()
+        return None
 
 
 def _transform_columns_meta(se_columns_meta):
