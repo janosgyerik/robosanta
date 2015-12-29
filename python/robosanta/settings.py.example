@@ -1,0 +1,3 @@
+EMAIL = 'your-se-email@example.com'
+PASSWORD = 'your-se-password'
+ROOM_IDS = [26245, 8595]  # RoboSanta's Playground, The 2nd Monitor
