@@ -14,10 +14,6 @@ class CodeOnlyAnswerPicker(PostPicker):
         self.cr = CodeReview()
 
     @property
-    def name(self):
-        return 'code-only-answer'
-
-    @property
     def url(self):
         return URL
 

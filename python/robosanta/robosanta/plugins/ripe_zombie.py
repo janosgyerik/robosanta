@@ -15,10 +15,6 @@ class RipeZombiePicker(PostPicker):
         self.cr = CodeReview()
 
     @property
-    def name(self):
-        return 'ripe-zombie'
-
-    @property
     def url(self):
         return URL
 

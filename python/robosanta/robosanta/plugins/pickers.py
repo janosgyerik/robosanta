@@ -11,16 +11,6 @@ class PostPicker:
     """
 
     @abstractproperty
-    def name(self):
-        """
-        Short name to represent the query, in slug format.
-        Used for for caching and logging. Should be unique.
-
-        :return: short name
-        """
-        raise NotImplementedError
-
-    @abstractproperty
     def url(self):
         """
         SEDE URL to fetch
@@ -46,7 +36,7 @@ class PostPicker:
 
         :return: a list of messages to post
         """
-        table = sede.fetch_table(self.name, self.url)
+        table = sede.fetch_table(self.url)
         if table:
             post_ids = table.post_ids()
             random.shuffle(post_ids)

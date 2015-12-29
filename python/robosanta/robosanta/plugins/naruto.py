@@ -3,7 +3,7 @@ import logging
 from robosanta.plugins.pickers import PostPicker
 from stackexchange import CodeReview
 
-URL = 'http://data.stackexchange.com/codereview/query/264586/naruto-accepted-answer-with-zero-score'
+URL = 'http://data.stackexchange.com/codereview/query/264586/naruto'
 INTRO_MESSAGE = 'Naruto answer; accepted non-selfie answer with 0 score:'
 
 
@@ -12,10 +12,6 @@ class NarutoPicker(PostPicker):
     def __init__(self):
         super().__init__()
         self.cr = CodeReview()
-
-    @property
-    def name(self):
-        return 'naruto'
 
     @property
     def url(self):

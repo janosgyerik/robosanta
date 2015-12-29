@@ -70,41 +70,40 @@ class Table:
         return [post_link['id'] for post_link in self.column('Post Link')]
 
 
-def fetch_table(label, url):
+def fetch_table(url):
     """
     Fetch a URL using `fetch_soup` and extract to a Table.
 
-    :param label: a simple name to represent the URL, it will be used as the cache filename
     :param url: the URL to download
     :return: the Table representing the SEDE results, or None if fetch failed
     """
-    soup = _fetch_sede_soup(label, url)
+    soup = _fetch_sede_soup(url)
     if not soup:
         return None
 
     return _extract_table(soup)
 
 
-def _fetch_sede_soup(label, url):
+def _fetch_sede_soup(url):
     """
     Download the result page of a SEDE query and create a BeautifulSoup from it.
-    If the page contains results, cache it in a file.
+    If the page contains results, cache it.
     If the page doesn't contain results, use the cache instead.
     Note: this happens when the SEDE query is not executed in the browser
     for a few days.
 
-    :param label: a simple name to represent the URL, it will be used as the cache filename
     :param url: the URL to download
     :return: a BeautifulSoup instance from the URL
     """
 
+    label = _url_to_slug(url)
     cache_path = os.path.join(CACHE_DIR, '{}.html'.format(label))
     debug_cache_path = os.path.join(CACHE_DIR, '{}-debug.html'.format(label))
 
     if not os.path.isdir(CACHE_DIR):
         os.mkdir(CACHE_DIR)
 
-    logging.info('fetching {} as {}'.format(label, url))
+    logging.info('fetching {}'.format(url))
     html = requests.get(url).text
     soup = BeautifulSoup(html)
 
