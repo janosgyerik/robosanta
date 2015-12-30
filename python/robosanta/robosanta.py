@@ -40,16 +40,16 @@ def parse_args():
 
     rooms = args.rooms.split(',')
 
+    messages = []
+
     if args.message:
-        messages = [args.message]
-    elif args.naruto:
-        messages = NarutoPicker().pick()
-    elif args.ripe_zombie:
-        messages = RipeZombiePicker().pick()
-    elif args.code_only_answer:
-        messages = CodeOnlyAnswerPicker().pick()
-    else:
-        return
+        messages.append(args.message)
+    if args.naruto:
+        messages.extend(NarutoPicker().pick())
+    if args.ripe_zombie:
+        messages.extend(RipeZombiePicker().pick())
+    if args.code_only_answer:
+        messages.extend(CodeOnlyAnswerPicker().pick())
 
     if not messages:
         logging.info('no suitable messages found, exit')
