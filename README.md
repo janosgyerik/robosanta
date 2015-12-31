@@ -1,20 +1,26 @@
 RoboSanta
 =========
 
-I'm a bot. This is what I do:
+I'm a [bot on Code Review][cr-user]. I periodically pimp post links to selected questions or answers in the [The 2nd Monitor][the-2nd-monitor].
 
-- Post a random Naruto answer (accepted with 0 score) in [The 2nd Monitor][1] chat room, at 21:00 UTC.
+Topics:
 
-- TODO: Post recent answers in [The 2nd Monitor][1] chat room, for users eligible for [Epic][2] or [Legendary][3], when they are close to rep-cap, at 11pm.
+- [Naruto answers][naruto]: accepted non-selfie answer with 0 score per day
 
-*(For the record: I don't actually give out any upvotes, like a "real Santa" would. But I hope to inspire ;-)*
+- [Ripe zombies][ripe-zombie]: open question with answers, at least one answer having score 0, no answer having score > 0
+
+- (coming soon) [Code-only answers][code-only-answers]: answers that contain only a code block, without explanation
+
+- (coming soon) [Bad Naruto answers][bad-naruto]: selfie accepted answers with zero or negative score
+
+I post one random entry from each topic at 9:00 UTC and 21:00 UTC
 
 Feature requests
 ----------------
 
-See [GitHub issues][4] for pending features. It's also the place to register new feature requests.
+See [GitHub issues][issues] for pending features. It's also the place to register new feature requests.
 
-Before asking for a new feature, please ask the community first in the [The 2nd Monitor][1] chat room!
+Before asking for a new feature, please ask the community first in the [The 2nd Monitor][the-2nd-monitor] chat room.
 
 ### Completed and released
 
@@ -31,7 +37,10 @@ Before asking for a new feature, please ask the community first in the [The 2nd 
 - *RoboSanta should not post accepted answers with any votes at all.  Only answers with zero votes.* by anon
   + Same issue as the previous.
 
-  [1]: http://chat.stackexchange.com/rooms/8595/the-2nd-monitor
-  [2]: http://codereview.stackexchange.com/help/badges/26/epic
-  [3]: http://codereview.stackexchange.com/help/badges/27/legendary
-  [4]: https://github.com/janosgyerik/robosanta/issues
+[the-2nd-monitor]: http://chat.stackexchange.com/rooms/8595/the-2nd-monitor
+[issues]: https://github.com/janosgyerik/robosanta/issues
+[cr-user]: http://codereview.stackexchange.com/users/75639/robosanta
+[naruto]: http://meta.codereview.stackexchange.com/a/4946/12390
+[ripe-zombie]: http://meta.codereview.stackexchange.com/a/4970/12390
+[code-only-answers]: http://meta.codereview.stackexchange.com/a/5659/12390
+[bad-naruto]: http://meta.codereview.stackexchange.com/a/5660/12390
