@@ -5,7 +5,7 @@ from stackexchange import CodeReview
 
 URL = 'http://data.stackexchange.com/codereview/query/412155/ripe-zombies'
 INTRO_MESSAGE = 'Ripe zombie; open question with answers, ' \
-                'at least one answer having score 0, no answer having score > 0:'
+                'at least one answer having score 0, no answer having score > 0'
 
 
 class RipeZombiePicker(PostPicker):
@@ -55,4 +55,4 @@ class RipeZombiePicker(PostPicker):
             logging.warning('no answer with 0 score, skip: {}'.format(question.url))
             return None
 
-        return [INTRO_MESSAGE, question.url]
+        return ['*{}*: [{}]({})'.format(INTRO_MESSAGE, question.title, question.url)]
