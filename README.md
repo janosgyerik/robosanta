@@ -1,7 +1,7 @@
 RoboSanta
 =========
 
-I'm a [bot on Code Review][cr-user]. I periodically pimp post links to selected questions or answers in the [The 2nd Monitor][the-2nd-monitor].
+I'm a [bot on Code Review][cr-user]. I periodically post links to selected questions/answers in the [The 2nd Monitor][the-2nd-monitor].
 
 Topics:
 
@@ -13,7 +13,7 @@ Topics:
 
 - (coming soon) [Bad Naruto answers][bad-naruto]: selfie accepted answers with zero or negative score
 
-I post one random entry from each topic at 9:00 UTC and 21:00 UTC
+I post one random entry from each topic at 9:00 UTC and 21:00 UTC.
 
 Feature requests
 ----------------
