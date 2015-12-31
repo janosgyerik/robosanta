@@ -4,7 +4,7 @@ from robosanta.plugins.pickers import PostPicker
 from stackexchange import CodeReview
 
 URL = 'http://data.stackexchange.com/codereview/query/412155/ripe-zombies'
-INTRO_MESSAGE = 'Ripe zombie; open question with answers, ' \
+DESCRIPTION = 'Ripe zombie; open question with answers, ' \
                 'at least one answer having score 0, no answer having score > 0'
 
 
@@ -55,4 +55,4 @@ class RipeZombiePicker(PostPicker):
             logging.warning('no answer with 0 score, skip: {}'.format(question.url))
             return None
 
-        return ['*{}*: [{}]({})'.format(INTRO_MESSAGE, question.title, question.url)]
+        return ['*{}*: [{}]({})'.format(DESCRIPTION, question.title, question.url)]
