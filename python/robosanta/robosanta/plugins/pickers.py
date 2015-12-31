@@ -29,6 +29,10 @@ class PostPicker:
         """
         raise NotImplementedError
 
+    def format(self, description, title, url, tags):
+        tags_str = ' '.join(['[tag:{}]'.format(tag) for tag in tags])
+        return ['*{}:* [{}]({}) {}'.format(description, title, url, tags_str)]
+
     def pick(self):
         """
         Select a random post from a list of post ids extracted from the URL.

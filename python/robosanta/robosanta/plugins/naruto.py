@@ -46,4 +46,4 @@ class NarutoPicker(PostPicker):
             logging.warning('score not zero, skip: {}'.format(answer.url))
             return None
 
-        return ['*{}*: [{}]({})'.format(DESCRIPTION, question.title, answer.url)]
+        return self.format(DESCRIPTION, question.title, answer.url, question.tags)

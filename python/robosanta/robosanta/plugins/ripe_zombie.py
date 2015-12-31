@@ -55,4 +55,4 @@ class RipeZombiePicker(PostPicker):
             logging.warning('no answer with 0 score, skip: {}'.format(question.url))
             return None
 
-        return ['*{}*: [{}]({})'.format(DESCRIPTION, question.title, question.url)]
+        return self.format(DESCRIPTION, question.title, question.url, question.tags)
