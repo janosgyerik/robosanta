@@ -1,6 +1,6 @@
 import logging
 
-from robosanta.plugins.pickers import PostPicker
+from robosanta.plugins.pickers import PostPicker, format_post
 from stackexchange import CodeReview
 
 URL = 'http://data.stackexchange.com/codereview/query/412155/ripe-zombies'
@@ -55,4 +55,4 @@ class RipeZombiePicker(PostPicker):
             logging.warning('no answer with 0 score, skip: {}'.format(question.url))
             return None
 
-        return self.format(DESCRIPTION, question.title, question.url, question.tags)
+        return format_post(DESCRIPTION, question.title, question.url, question.tags)

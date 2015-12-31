@@ -1,6 +1,6 @@
 import logging
 
-from robosanta.plugins.pickers import PostPicker
+from robosanta.plugins.pickers import PostPicker, format_post
 from stackexchange import CodeReview
 
 URL = 'http://data.stackexchange.com/codereview/query/264586/naruto'
@@ -46,4 +46,4 @@ class NarutoPicker(PostPicker):
             logging.warning('score not zero, skip: {}'.format(answer.url))
             return None
 
-        return self.format(DESCRIPTION, question.title, answer.url, question.tags)
+        return format_post(DESCRIPTION, question.title, answer.url, question.tags)

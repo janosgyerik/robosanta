@@ -4,6 +4,11 @@ from abc import abstractproperty, abstractmethod
 from robosanta.stackexchange import sede
 
 
+def format_post(description, title, url, tags):
+    tags_str = ' '.join(['[tag:{}]'.format(tag) for tag in tags])
+    return ['*{}:* [{}]({}) {}'.format(description, title, url, tags_str)]
+
+
 class PostPicker:
     """
     Abstract class to pick a random post from a list of post ids,
@@ -28,10 +33,6 @@ class PostPicker:
         :return: messages to send, or falsy to reject
         """
         raise NotImplementedError
-
-    def format(self, description, title, url, tags):
-        tags_str = ' '.join(['[tag:{}]'.format(tag) for tag in tags])
-        return ['*{}:* [{}]({}) {}'.format(description, title, url, tags_str)]
 
     def pick(self):
         """
