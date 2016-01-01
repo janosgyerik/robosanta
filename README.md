@@ -15,6 +15,8 @@ Topics:
 
 I post one random entry from each topic at 9:00 UTC and 21:00 UTC.
 
+In addition to The 2nd Monitor, I also post the same thing in [RoboSanta's Playground][playground].
+
 Feature requests
 ----------------
 
@@ -38,6 +40,7 @@ Before asking for a new feature, please ask the community first in the [The 2nd 
   + Same issue as the previous.
 
 [the-2nd-monitor]: http://chat.stackexchange.com/rooms/8595/the-2nd-monitor
+[playground]: http://chat.stackexchange.com/rooms/26245/robosantas-playground
 [issues]: https://github.com/janosgyerik/robosanta/issues
 [cr-user]: http://codereview.stackexchange.com/users/75639/robosanta
 [naruto]: http://meta.codereview.stackexchange.com/a/4946/12390
