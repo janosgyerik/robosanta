@@ -4,7 +4,8 @@ from robosanta.plugins.pickers import PostPicker, format_post
 from stackexchange import CodeReview
 
 URL = 'http://data.stackexchange.com/codereview/query/264586/naruto'
-DESCRIPTION = 'Naruto answer; accepted non-selfie answer with 0 score'
+DESCRIPTION_URL = 'http://meta.codereview.stackexchange.com/a/4946/12390'
+DESCRIPTION = '[Naruto answer]({}); accepted non-selfie answer with 0 score'.format(DESCRIPTION_URL)
 
 
 class NarutoPicker(PostPicker):
