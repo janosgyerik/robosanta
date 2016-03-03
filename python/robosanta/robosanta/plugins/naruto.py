@@ -33,6 +33,10 @@ class NarutoPicker(PostPicker):
             logging.error('error when fetching answer: '.format(e))
             return None
 
+        if not answer.is_accepted:
+            logging.warning('answer not accepted, skip: {}'.format(answer.url))
+            return None
+
         if answer.score != 0:
             logging.warning('score not zero, skip: {}'.format(answer.url))
             return None
