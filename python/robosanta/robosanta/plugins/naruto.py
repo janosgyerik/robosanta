@@ -33,6 +33,10 @@ class NarutoPicker(PostPicker):
             logging.error('error when fetching answer: '.format(e))
             return None
 
+        if answer.score != 0:
+            logging.warning('score not zero, skip: {}'.format(answer.url))
+            return None
+
         question = self.cr.question(answer.question_id)
 
         if 'closed_date' in question.json:
@@ -41,10 +45,6 @@ class NarutoPicker(PostPicker):
 
         if question.owner_id == answer.owner_id:
             logging.warning('answer owner is the same as question owner, skip: {}'.format(answer.url))
-            return None
-
-        if answer.score != 0:
-            logging.warning('score not zero, skip: {}'.format(answer.url))
             return None
 
         return format_post(DESCRIPTION, question.title, answer.url, question.tags)
