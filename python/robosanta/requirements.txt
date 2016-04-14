@@ -1,6 +1,6 @@
 # Install required python packages using pip:
 # pip install -r requirements.txt
-beautifulsoup4==4.3.2
+beautifulsoup4==4.4.1
 py-stackexchange==2.2.4
 requests==2.7.0
 six==1.9.0
