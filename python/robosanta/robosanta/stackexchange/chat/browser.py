@@ -45,30 +45,27 @@ class Browser(object):
 
     # authentication
 
-    def _se_openid_login_with_fkey(self, fkey_url, post_url, data):
-        data['fkey'] = self.get_fkey(fkey_url)
-        self.post(post_url, data)
-
     def login_se_openid(self, user, password):
-        self._se_openid_login_with_fkey(
-            SE_OPENID_LOGIN_ROOT,
+        self.post(
             SE_OPENID_LOGIN_ROOT + '/submit',
             {
                 'email': user,
                 'password': password,
-            })
+                'fkey': self.get_fkey(SE_OPENID_LOGIN_ROOT),
+            }
+        )
 
     def login_site(self):
-        self._se_openid_login_with_fkey(
-            SE_LOGIN_ROOT + '/login',
+        self.post(
             SE_LOGIN_ROOT + '/authenticate',
             {
-                'openid_identifier': SE_OPENID
-            })
+                'openid_identifier': SE_OPENID,
+                'fkey': self.get_fkey(SE_LOGIN_ROOT + '/login'),
+            }
+        )
 
     def login_chat(self):
-        fkey_url = CHAT_ROOT + '/chats/join/favorite'
-        self.chat_fkey = self.get_fkey(fkey_url)
+        self.chat_fkey = self.get_fkey(CHAT_ROOT + '/chats/join/favorite')
 
     # remote requests
 
