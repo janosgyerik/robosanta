@@ -36,7 +36,7 @@ class Browser(object):
 
     def get_soup(self, url, data=None, headers=None):
         response = self.get(url, data, headers)
-        return BeautifulSoup(response.content)
+        return BeautifulSoup(response.content, "html.parser")
 
     def get_fkey(self, url):
         fkey_soup = self.get_soup(url)
