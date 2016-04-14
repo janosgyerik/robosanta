@@ -66,8 +66,6 @@ class Browser(object):
             SE_LOGIN_ROOT + '/login',
             SE_LOGIN_ROOT + '/authenticate',
             {
-                'oauth_version': '',
-                'oauth_server': '',
                 'openid_identifier': SE_OPENID
             })
 
