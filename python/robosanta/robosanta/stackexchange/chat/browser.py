@@ -47,10 +47,7 @@ class Browser(object):
 
     def _se_openid_login_with_fkey(self, fkey_url, post_url, data):
         data['fkey'] = self.get_fkey(fkey_url)
-
-        response = self.post(post_url, data)
-
-        return response
+        self.post(post_url, data)
 
     def login_se_openid(self, user, password):
         self._se_openid_login_with_fkey(
