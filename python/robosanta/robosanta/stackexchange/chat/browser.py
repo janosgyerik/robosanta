@@ -63,7 +63,7 @@ class Browser(object):
 
     def login_site(self):
         self._se_openid_login_with_fkey(
-            SE_LOGIN_ROOT + '/login?returnurl = %%2f',
+            SE_LOGIN_ROOT + '/login',
             SE_LOGIN_ROOT + '/authenticate',
             {
                 'oauth_version': '',
