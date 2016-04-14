@@ -45,11 +45,11 @@ class Browser(object):
 
     # authentication
 
-    def login_se_openid(self, user, password):
+    def login_se_openid(self, email, password):
         self.post(
             SE_OPENID_LOGIN_ROOT + '/submit',
             {
-                'email': user,
+                'email': email,
                 'password': password,
                 'fkey': self.get_fkey(SE_OPENID_LOGIN_ROOT),
             }
