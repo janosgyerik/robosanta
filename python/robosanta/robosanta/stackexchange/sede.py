@@ -105,7 +105,7 @@ def _fetch_sede_soup(url):
 
     logging.info('fetching {}'.format(url))
     html = requests.get(url).text
-    soup = BeautifulSoup(html)
+    soup = BeautifulSoup(html, "html.parser")
 
     def is_valid(soup):
         for script in soup.findAll('script'):
