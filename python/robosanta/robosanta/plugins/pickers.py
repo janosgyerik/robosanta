@@ -39,7 +39,7 @@ class PostPicker:
         Select a random post from a list of post ids extracted from the URL.
         Iterate over the post ids until self.accept returns truthy.
 
-        :return: a list of messages to post
+        :return: a list of messages to post, or else empty list if none
         """
         table = sede.fetch_table(self.url)
         if table:
@@ -51,4 +51,4 @@ class PostPicker:
                 if post:
                     return post
 
-        return None
+        return ()
