@@ -26,9 +26,9 @@ def parse_args():
     parser.add_argument('-n', '--dry-run', action='store_true')
     parser.add_argument('-q', '--quiet', action='store_true')
     parser.add_argument('-r', '--rooms', metavar='ROOMS', default=default_room_ids)
-    parser.add_argument('--naruto', action='store_true', help='Post a Naruto answer')
-    parser.add_argument('--ripe-zombie', action='store_true', help='Post a ripe zombie')
-    parser.add_argument('--code-only-answer', action='store_true', help='Code-only answer')
+    parser.add_argument('--naruto', action='store_true', help='Post a link to a Naruto answer')
+    parser.add_argument('--ripe-zombie', action='store_true', help='Post a link to a ripe zombie')
+    parser.add_argument('--code-only-answer', action='store_true', help='Post a link to a code-only answer')
     parser.add_argument('-m', '--message', help='Post a message in a chat room')
 
     args = parser.parse_args()
