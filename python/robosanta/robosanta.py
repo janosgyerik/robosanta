@@ -7,6 +7,7 @@ import settings
 from robosanta.plugins.code_only_answers import CodeOnlyAnswerPicker
 from robosanta.plugins.naruto import NarutoPicker
 from robosanta.plugins.ripe_zombie import RipeZombiePicker
+from robosanta.plugins.tumbleweed_candidates import TumbleweedCandidatePicker
 from robosanta.stackexchange.chat.client import Client
 
 
@@ -29,6 +30,7 @@ def parse_args():
     parser.add_argument('--naruto', action='store_true', help='Post a link to a Naruto answer')
     parser.add_argument('--ripe-zombie', action='store_true', help='Post a link to a ripe zombie')
     parser.add_argument('--code-only-answer', action='store_true', help='Post a link to a code-only answer')
+    parser.add_argument('--tumbleweed', action='store_true', help='Post a link to a Tumbleweed candidate')
     parser.add_argument('-m', '--message', help='Post a message in a chat room')
 
     args = parser.parse_args()
@@ -50,6 +52,8 @@ def parse_args():
         messages.extend(RipeZombiePicker().pick())
     if args.code_only_answer:
         messages.extend(CodeOnlyAnswerPicker().pick())
+    if args.tumbleweed:
+        messages.extend(TumbleweedCandidatePicker().pick())
 
     if not messages:
         logging.info('no suitable messages found, exit')
