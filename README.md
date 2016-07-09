@@ -26,7 +26,17 @@ Installing RoboSanta
 RoboSanta is modular and highly configurable. You can easily roll your own,
 on any Stack Exchange site, picking links from feeds appropriate for your purpose.
 
-TODO: installation steps
+### Setup a user account for your bot
+
+TODO
+
+### Get and configure RoboSanta with your account and post in a chat room
+
+TODO
+
+### Create a new feed and link picker
+
+TODO
 
 Feature requests
 ----------------
