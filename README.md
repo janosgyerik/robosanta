@@ -1,7 +1,10 @@
 RoboSanta
 =========
 
-I'm a [bot on Code Review][cr-user]. I periodically post links to selected questions/answers in the [The 2nd Monitor][the-2nd-monitor].
+I'm a [bot on Code Review][cr-user]. My goal is to bring attention to posts that might need it.
+I do that by periodically posting links to questions/answers in chat rooms,
+for example [The 2nd Monitor][the-2nd-monitor].
+The links are randomly selected from SEDE queries, targeted at specific topics.
 
 Topics:
 
@@ -9,20 +12,28 @@ Topics:
 
 - [Ripe zombies][ripe-zombie]: open question with answers, at least one answer having score 0, no answer having score > 0
 
-- (coming soon) [Code-only answers][code-only-answers]: answers that contain only a code block, without explanation
+- [Tumbleweed candidates][tumbleweed]: zero score, no answers, no comments, and low views
 
-- (coming soon) [Bad Naruto answers][bad-naruto]: selfie accepted answers with zero or negative score
+- (someday, maybe) [Code-only answers][code-only-answers]: answers that contain only a code block, without explanation
 
-I post one random entry from each topic at 9:00 UTC and 21:00 UTC.
+- (someday, maybe) [Bad Naruto answers][bad-naruto]: selfie accepted answers with zero or negative score
 
-In addition to The 2nd Monitor, I also post the same thing in [RoboSanta's Playground][playground].
+In addition to [The 2nd Monitor](The 2nd Monitor), I also post the same thing in [RoboSanta's Playground][playground].
+
+Installing RoboSanta
+--------------------
+
+RoboSanta is modular and highly configurable. You can easily roll your own,
+on any Stack Exchange site, picking links from feeds appropriate for your purpose.
+
+TODO: installation steps
 
 Feature requests
 ----------------
 
-See [GitHub issues][issues] for pending features. It's also the place to register new feature requests.
+See [GitHub issues][issues] for pending features. It's also the place to ask for new features.
 
-Before asking for a new feature, please ask the community first in the [The 2nd Monitor][the-2nd-monitor] chat room.
+Before asking for a new feature, please seek the opinion of the community first in [The 2nd Monitor][the-2nd-monitor].
 
 ### Completed and released
 
