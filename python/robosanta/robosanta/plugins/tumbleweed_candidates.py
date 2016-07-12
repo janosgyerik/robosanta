@@ -7,8 +7,6 @@ URL = 'http://data.stackexchange.com/codereview/query/508754/tumbleweed-preventi
 DESCRIPTION_URL = 'http://meta.codereview.stackexchange.com/a/4947/12390'
 DESCRIPTION = '[Tumbleweed candidate]({}); zero score, no answers, no comments, and low views'.format(DESCRIPTION_URL)
 
-VIEW_COUNT_LIMIT = 25
-
 
 class TumbleweedCandidatePicker(PostPicker):
 
@@ -40,10 +38,6 @@ class TumbleweedCandidatePicker(PostPicker):
 
         if question.score != 0:
             logging.warning('question has non-zero score, skip: {}'.format(question.url))
-            return None
-
-        if question.view_count > VIEW_COUNT_LIMIT:
-            logging.warning('question has views > {}, skip: {}'.format(VIEW_COUNT_LIMIT, question.url))
             return None
 
         if question.answers:
