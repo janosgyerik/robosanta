@@ -1,6 +1,8 @@
 RoboSanta
 =========
 
+*(See the recent changes in the [Change Log](https://github.com/janosgyerik/robosanta/blob/master/python/robosanta/ChangeLog.md).)*
+
 I'm a [bot on Code Review][cr-user]. My goal is to bring attention to posts that might need it.
 I do that by periodically posting links to questions/answers in chat rooms,
 for example [The 2nd Monitor][the-2nd-monitor].
