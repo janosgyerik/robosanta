@@ -1,4 +1,6 @@
+import json
 import logging
+import requests
 
 from robosanta.plugins.pickers import PostPicker, format_post
 from stackexchange import CodeReview
@@ -48,11 +50,26 @@ class TumbleweedCandidatePicker(PostPicker):
             logging.warning('question has comments, skip: {}'.format(question.url))
             return None
 
-        if self.has_tumbleweed(question.owner_id):
-            logging.warning('owner already has tumbleweed, skip: {}'.format(question.url))
+        if self.recently_awarded_tumbleweed(question.owner_id, question.creation_date):
+            logging.warning('owner has recently received tumbleweed, skip: {}'.format(question.url))
             return None
 
         return format_post(DESCRIPTION, question.title, question.url, question.tags)
+
+    def recently_awarded_tumbleweed(self, user_id, date):
+        badge_id = self.cr.badge(name='Tumbleweed').id
+        fromdate = int(date.timestamp())
+        url = 'https://api.stackexchange.com/2.2/badges/{}/recipients'.format(badge_id)
+        data = {
+            'fromdate': fromdate,
+            'site': 'codereview',
+        }
+        response = requests.get(url, data)
+        if not response.ok:
+            return self.has_tumbleweed(user_id)
+
+        items = json.loads(response.content.decode())['items']
+        return user_id in [item['user']['user_id'] for item in items]
 
     def has_tumbleweed(self, owner_id):
         user = self.cr.user(owner_id)
