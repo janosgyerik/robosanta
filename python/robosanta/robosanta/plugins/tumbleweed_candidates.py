@@ -48,4 +48,12 @@ class TumbleweedCandidatePicker(PostPicker):
             logging.warning('question has comments, skip: {}'.format(question.url))
             return None
 
+        if self.has_tumbleweed(question.owner_id):
+            logging.warning('owner already has tumbleweed, skip: {}'.format(question.url))
+            return None
+
         return format_post(DESCRIPTION, question.title, question.url, question.tags)
+
+    def has_tumbleweed(self, owner_id):
+        user = self.cr.user(owner_id)
+        return any([badge.name == 'Tumbleweed' for badge in user.badges.fetch()])
