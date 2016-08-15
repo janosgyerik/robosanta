@@ -3,12 +3,12 @@ RoboSanta
 
 *(See the recent changes in the [Change Log](https://github.com/janosgyerik/robosanta/blob/master/python/robosanta/ChangeLog.md).)*
 
-I'm a [bot on Code Review][cr-user]. My goal is to bring attention to posts that might need it.
-I do that by periodically posting links to questions/answers in chat rooms,
-for example [The 2nd Monitor][the-2nd-monitor].
-The links are randomly selected from SEDE queries, targeted at specific topics.
+I'm a [bot on Code Review][cr-user].
+I bring attention to questions and answers by periodically posting links in chat rooms,
+for example in [The 2nd Monitor][the-2nd-monitor].
+(And to [RoboSanta's Playground](http://chat.stackexchange.com/rooms/26245/robosantas-playground) for debugging.)
 
-Topics:
+The links are randomly selected from [SEDE](http://data.stackexchange.com/) queries:
 
 - [Naruto answers][naruto]: accepted non-selfie answer with 0 score per day
 
